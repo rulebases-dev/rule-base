@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 
 export function CursorSpotlight() {
@@ -8,6 +8,9 @@ export function CursorSpotlight() {
   const rafRef = useRef<number>(0);
   const posRef = useRef({ x: 0, y: 0 });
   const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   const update = useCallback(() => {
     if (spotlightRef.current) {
@@ -56,9 +59,9 @@ export function CursorSpotlight() {
   }, [update]);
 
   const gradient =
-    resolvedTheme === "dark"
-      ? "radial-gradient(400px circle at var(--spotlight-x, -999px) var(--spotlight-y, -999px), rgba(139, 92, 246, 0.07), rgba(99, 102, 241, 0.03) 40%, transparent 70%)"
-      : "radial-gradient(400px circle at var(--spotlight-x, -999px) var(--spotlight-y, -999px), rgba(139, 92, 246, 0.05), rgba(99, 102, 241, 0.02) 40%, transparent 70%)";
+    mounted && resolvedTheme === "light"
+      ? "radial-gradient(400px circle at var(--spotlight-x, -999px) var(--spotlight-y, -999px), rgba(139, 92, 246, 0.05), rgba(99, 102, 241, 0.02) 40%, transparent 70%)"
+      : "radial-gradient(400px circle at var(--spotlight-x, -999px) var(--spotlight-y, -999px), rgba(139, 92, 246, 0.07), rgba(99, 102, 241, 0.03) 40%, transparent 70%)";
 
   return (
     <div
