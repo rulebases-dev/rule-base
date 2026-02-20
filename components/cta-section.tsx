@@ -4,13 +4,13 @@ import { Button } from "@/components/ui/button";
 export function CtaSection() {
   return (
     <section id="submit" className="scroll-mt-20 py-20">
-      <div className="cta-gradient relative overflow-hidden rounded-2xl border border-white/[0.06] p-10 text-center sm:p-14">
+      <div className="cta-gradient relative overflow-hidden rounded-2xl border border-border p-10 text-center sm:p-14">
         {/* Decorative glow */}
         <div className="pointer-events-none absolute -top-24 left-1/2 size-64 -translate-x-1/2 rounded-full bg-violet-500/10 blur-3xl" />
 
         <div className="relative">
           <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 ring-1 ring-violet-500/20">
-            <Sparkles className="size-5 text-violet-400" />
+            <Sparkles className="size-5 text-violet-500 dark:text-violet-400" />
           </div>
 
           <h2 className="mb-3 text-2xl font-bold tracking-tight sm:text-3xl">
@@ -32,7 +32,7 @@ export function CtaSection() {
             <Button
               variant="outline"
               size="lg"
-              className="gap-2 border-white/[0.1] bg-white/[0.02] backdrop-blur-sm hover:bg-white/[0.05]"
+              className="gap-2 border-border backdrop-blur-sm hover:bg-foreground/[0.05]"
             >
               Read the Guidelines
             </Button>

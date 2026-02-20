@@ -138,9 +138,15 @@ button,
 .hero-grid {
   background-size: 60px 60px;
   background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  mask-image: radial-gradient(ellipse 70% 50% at 50% 0%, black 30%, transparent 100%);
+}
+
+.dark .hero-grid {
+  background-image:
     linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  mask-image: radial-gradient(ellipse 70% 50% at 50% 0%, black 30%, transparent 100%);
 }
 
 /* Glow orb effect */
@@ -153,12 +159,21 @@ button,
   transform: translateX(-50%);
   background: radial-gradient(
     ellipse at center,
-    rgba(139, 92, 246, 0.12) 0%,
-    rgba(99, 102, 241, 0.06) 40%,
+    rgba(139, 92, 246, 0.08) 0%,
+    rgba(99, 102, 241, 0.04) 40%,
     transparent 70%
   );
   pointer-events: none;
   z-index: 0;
+}
+
+.dark .hero-glow {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(139, 92, 246, 0.12) 0%,
+    rgba(99, 102, 241, 0.06) 40%,
+    transparent 70%
+  );
 }
 
 @keyframes fade-in {
@@ -184,12 +199,26 @@ button,
 
 /* Glassmorphism card */
 .glass-card {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .glass-card:hover {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.03),
+    0 8px 40px rgba(0, 0, 0, 0.08),
+    0 0 80px rgba(139, 92, 246, 0.03);
+}
+
+.dark .glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.dark .glass-card:hover {
   background: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 255, 255, 0.1);
   box-shadow:
@@ -206,6 +235,15 @@ button,
 
 /* CTA section gradient */
 .cta-gradient {
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.06) 0%,
+    rgba(99, 102, 241, 0.03) 50%,
+    rgba(236, 72, 153, 0.04) 100%
+  );
+}
+
+.dark .cta-gradient {
   background: linear-gradient(
     135deg,
     rgba(139, 92, 246, 0.08) 0%,

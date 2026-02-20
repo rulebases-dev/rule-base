@@ -27,10 +27,10 @@ export function UserMenu({ name, image, email }: UserMenuProps) {
           <img
             src={image}
             alt={name ?? "User"}
-            className="size-7 rounded-full ring-1 ring-white/[0.1]"
+            className="size-7 rounded-full ring-1 ring-border"
           />
         ) : (
-          <div className="flex size-7 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 text-[10px] font-bold text-white ring-1 ring-white/[0.1]">
+          <div className="flex size-7 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 text-[10px] font-bold text-white ring-1 ring-border">
             {initials}
           </div>
         )}

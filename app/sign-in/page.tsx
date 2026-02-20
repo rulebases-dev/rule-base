@@ -92,7 +92,7 @@ export default function SignInPage() {
 
         {/* Error message */}
         {error && (
-          <div className="mb-4 rounded-lg border border-red-500/20 bg-red-500/10 px-3 py-2 text-center text-[13px] text-red-400">
+          <div className="mb-4 rounded-lg border border-red-500/20 bg-red-500/10 px-3 py-2 text-center text-[13px] text-red-600 dark:text-red-400">
             {error}
           </div>
         )}
@@ -101,7 +101,7 @@ export default function SignInPage() {
         <div className="space-y-2.5">
           <Button
             variant="outline"
-            className="h-10 w-full gap-2.5 border-white/[0.08] bg-white/[0.03] text-[13px] font-medium hover:bg-white/[0.06]"
+            className="h-10 w-full gap-2.5 border-border bg-foreground/[0.03] text-[13px] font-medium hover:bg-foreground/[0.06]"
             onClick={() => handleOAuth("github")}
             disabled={oauthLoading !== null}
           >
@@ -114,7 +114,7 @@ export default function SignInPage() {
           </Button>
           <Button
             variant="outline"
-            className="h-10 w-full gap-2.5 border-white/[0.08] bg-white/[0.03] text-[13px] font-medium hover:bg-white/[0.06]"
+            className="h-10 w-full gap-2.5 border-border bg-foreground/[0.03] text-[13px] font-medium hover:bg-foreground/[0.06]"
             onClick={() => handleOAuth("google")}
             disabled={oauthLoading !== null}
           >
@@ -129,11 +129,11 @@ export default function SignInPage() {
 
         {/* Divider */}
         <div className="my-6 flex items-center gap-3">
-          <div className="h-px flex-1 bg-white/[0.06]" />
+          <div className="h-px flex-1 bg-border" />
           <span className="text-xs text-muted-foreground/60">
             or continue with email
           </span>
-          <div className="h-px flex-1 bg-white/[0.06]" />
+          <div className="h-px flex-1 bg-border" />
         </div>
 
         {/* Email form */}
@@ -152,7 +152,7 @@ export default function SignInPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="h-10 rounded-lg border-white/[0.08] bg-white/[0.03] text-[13px] placeholder:text-muted-foreground/40 focus-visible:border-violet-500/30 focus-visible:ring-2 focus-visible:ring-violet-500/15"
+              className="h-10 rounded-lg border-border bg-foreground/[0.03] text-[13px] placeholder:text-muted-foreground/40 focus-visible:border-violet-500/30 focus-visible:ring-2 focus-visible:ring-violet-500/15"
             />
           </div>
 
@@ -166,7 +166,7 @@ export default function SignInPage() {
               </label>
               <a
                 href="#"
-                className="text-xs text-violet-400 transition-colors hover:text-violet-300"
+                className="text-xs text-violet-500 transition-colors hover:text-violet-600 dark:text-violet-400 dark:hover:text-violet-300"
               >
                 Forgot password?
               </a>
@@ -178,7 +178,7 @@ export default function SignInPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="h-10 rounded-lg border-white/[0.08] bg-white/[0.03] text-[13px] placeholder:text-muted-foreground/40 focus-visible:border-violet-500/30 focus-visible:ring-2 focus-visible:ring-violet-500/15"
+              className="h-10 rounded-lg border-border bg-foreground/[0.03] text-[13px] placeholder:text-muted-foreground/40 focus-visible:border-violet-500/30 focus-visible:ring-2 focus-visible:ring-violet-500/15"
             />
           </div>
 
@@ -203,7 +203,7 @@ export default function SignInPage() {
           Don&apos;t have an account?{" "}
           <a
             href="#"
-            className="font-medium text-violet-400 transition-colors hover:text-violet-300"
+            className="font-medium text-violet-500 transition-colors hover:text-violet-600 dark:text-violet-400 dark:hover:text-violet-300"
           >
             Sign up
           </a>

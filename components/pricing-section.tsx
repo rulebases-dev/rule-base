@@ -66,7 +66,7 @@ export function PricingSection() {
   return (
     <section id="pricing" className="scroll-mt-20 py-24">
       <div className="mb-14 text-center">
-        <p className="mb-3 text-sm font-medium uppercase tracking-wide text-violet-400">
+        <p className="mb-3 text-sm font-medium uppercase tracking-wide text-violet-500 dark:text-violet-400">
           Pricing
         </p>
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
@@ -101,7 +101,7 @@ export function PricingSection() {
                     "flex size-9 items-center justify-center rounded-xl",
                     tier.popular
                       ? "bg-gradient-to-br from-violet-500 to-indigo-600 shadow-lg shadow-violet-500/20"
-                      : "bg-white/[0.06] ring-1 ring-white/[0.06]"
+                      : "bg-foreground/[0.06] ring-1 ring-border"
                   )}
                 >
                   {tier.popular ? (
@@ -120,7 +120,7 @@ export function PricingSection() {
                 <span className="text-[15px] font-semibold">{tier.name}</span>
               </div>
               {tier.popular && (
-                <Badge className="border-violet-500/30 bg-violet-500/10 text-violet-300 hover:bg-violet-500/10">
+                <Badge className="border-violet-500/30 bg-violet-500/10 text-violet-600 hover:bg-violet-500/10 dark:text-violet-300">
                   Popular
                 </Badge>
               )}
@@ -147,7 +147,7 @@ export function PricingSection() {
                 "mb-7 w-full",
                 tier.popular
                   ? "bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-500/20 hover:from-violet-500 hover:to-indigo-500"
-                  : "border-white/[0.08] bg-white/[0.04] text-foreground hover:bg-white/[0.08]"
+                  : "border-border bg-foreground/[0.04] text-foreground hover:bg-foreground/[0.08]"
               )}
               variant={tier.popular ? "default" : "outline"}
             >
@@ -164,7 +164,7 @@ export function PricingSection() {
                   <Check
                     className={cn(
                       "mt-0.5 size-3.5 shrink-0",
-                      tier.popular ? "text-violet-400" : "text-muted-foreground/50"
+                      tier.popular ? "text-violet-500 dark:text-violet-400" : "text-muted-foreground/50"
                     )}
                   />
                   {feature}

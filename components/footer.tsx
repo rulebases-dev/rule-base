@@ -8,7 +8,7 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/[0.06]">
+    <footer className="border-t border-border">
       <div className="mx-auto max-w-6xl px-6">
         {/* Main footer */}
         <div className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-5">
@@ -29,13 +29,13 @@ export function Footer() {
             <div className="flex items-center gap-3">
               <a
                 href="#"
-                className="flex size-8 items-center justify-center rounded-lg bg-white/[0.04] text-muted-foreground ring-1 ring-white/[0.06] transition-all hover:bg-white/[0.08] hover:text-foreground"
+                className="flex size-8 items-center justify-center rounded-lg bg-foreground/[0.04] text-muted-foreground ring-1 ring-border transition-all hover:bg-foreground/[0.08] hover:text-foreground"
               >
                 <Github className="size-4" />
               </a>
               <a
                 href="#"
-                className="flex size-8 items-center justify-center rounded-lg bg-white/[0.04] text-muted-foreground ring-1 ring-white/[0.06] transition-all hover:bg-white/[0.08] hover:text-foreground"
+                className="flex size-8 items-center justify-center rounded-lg bg-foreground/[0.04] text-muted-foreground ring-1 ring-border transition-all hover:bg-foreground/[0.08] hover:text-foreground"
               >
                 <Twitter className="size-4" />
               </a>
@@ -63,7 +63,7 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col items-center justify-between gap-3 border-t border-white/[0.06] py-6 sm:flex-row">
+        <div className="flex flex-col items-center justify-between gap-3 border-t border-border py-6 sm:flex-row">
           <p className="text-xs text-muted-foreground/60" suppressHydrationWarning>
             &copy; {new Date().getFullYear()} RuleBase. All rights reserved.
           </p>

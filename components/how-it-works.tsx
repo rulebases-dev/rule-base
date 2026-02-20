@@ -31,7 +31,7 @@ export function HowItWorks() {
   return (
     <section id="how-it-works" className="scroll-mt-20 py-24">
       <div className="mb-14 text-center">
-        <p className="mb-3 text-sm font-medium tracking-wide text-violet-400 uppercase">
+        <p className="mb-3 text-sm font-medium tracking-wide text-violet-500 dark:text-violet-400 uppercase">
           How it works
         </p>
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">

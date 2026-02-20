@@ -14,7 +14,7 @@ export function FeaturedRules({ rules }: FeaturedRulesProps) {
     <section id="trending" className="scroll-mt-20 py-16">
       <div className="mb-8 flex items-center gap-2.5">
         <div className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500/20 to-orange-500/20 ring-1 ring-amber-500/20">
-          <TrendingUp className="size-4 text-amber-400" />
+          <TrendingUp className="size-4 text-amber-500 dark:text-amber-400" />
         </div>
         <div>
           <h2 className="text-xl font-bold tracking-tight">Trending Rules</h2>

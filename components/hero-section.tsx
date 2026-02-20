@@ -28,8 +28,8 @@ export function HeroSection({ searchQuery, onSearchChange }: HeroSectionProps) {
 
       <div className="relative flex flex-1 flex-col items-center justify-center gap-6 pb-12 text-center">
         {/* Badge */}
-        <div className="animate-fade-in inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-3.5 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur-sm">
-          <Sparkles className="size-3 text-violet-400" />
+        <div className="animate-fade-in inline-flex items-center gap-2 rounded-full border border-border bg-foreground/[0.03] px-3.5 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur-sm">
+          <Sparkles className="size-3 text-violet-500 dark:text-violet-400" />
           Open-source prompt directory
         </div>
 
@@ -61,7 +61,7 @@ export function HeroSection({ searchQuery, onSearchChange }: HeroSectionProps) {
             placeholder="Search rules... (e.g. Next.js, Python, FastAPI)"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="h-12 rounded-xl border-white/[0.08] bg-white/[0.03] pl-11 pr-4 text-[15px] shadow-xl shadow-black/20 backdrop-blur-md transition-all placeholder:text-muted-foreground/50 focus-visible:border-violet-500/30 focus-visible:bg-white/[0.05] focus-visible:ring-2 focus-visible:ring-violet-500/15"
+            className="h-12 rounded-xl border-border bg-foreground/[0.03] pl-11 pr-4 text-[15px] shadow-xl shadow-black/5 backdrop-blur-md transition-all placeholder:text-muted-foreground/50 focus-visible:border-violet-500/30 focus-visible:bg-foreground/[0.05] focus-visible:ring-2 focus-visible:ring-violet-500/15 dark:shadow-black/20"
           />
         </div>
 
@@ -83,7 +83,7 @@ export function HeroSection({ searchQuery, onSearchChange }: HeroSectionProps) {
           <Button
             variant="outline"
             size="lg"
-            className="gap-2 border-white/[0.1] bg-white/[0.03] text-foreground backdrop-blur-sm hover:bg-white/[0.06]"
+            className="gap-2 border-border text-foreground backdrop-blur-sm hover:bg-foreground/[0.05]"
             asChild
           >
             <a href="#pricing">Get Started Free</a>
