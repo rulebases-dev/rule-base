@@ -6,7 +6,7 @@ import { HowItWorks } from "@/components/how-it-works";
 import { FeaturedRules } from "@/components/featured-rules";
 import { CategoryPills } from "@/components/category-pills";
 import { PromptGrid } from "@/components/prompt-grid";
-import { PricingSection } from "@/components/pricing-section";
+
 import { CtaSection } from "@/components/cta-section";
 import { type Category, rules } from "@/lib/data";
 
@@ -47,7 +47,7 @@ export default function Home() {
         </div>
 
         <div className="mx-auto max-w-6xl px-6">
-          <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+          <div className="h-px bg-gradient-to-r from-transparent via-foreground/[0.06] to-transparent" />
         </div>
 
         {!isFiltering && (
@@ -58,7 +58,7 @@ export default function Home() {
 
         {!isFiltering && (
           <div className="mx-auto max-w-6xl px-6">
-            <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+            <div className="h-px bg-gradient-to-r from-transparent via-foreground/[0.06] to-transparent" />
           </div>
         )}
 
@@ -71,15 +71,7 @@ export default function Home() {
         </div>
 
         <div className="mx-auto max-w-6xl px-6">
-          <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
-        </div>
-
-        <div className="mx-auto max-w-6xl px-6">
-          <PricingSection />
-        </div>
-
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+          <div className="h-px bg-gradient-to-r from-transparent via-foreground/[0.06] to-transparent" />
         </div>
 
         <div className="mx-auto max-w-6xl px-6">

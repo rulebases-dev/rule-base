@@ -86,7 +86,7 @@ export function HeroSection({ searchQuery, onSearchChange }: HeroSectionProps) {
             className="gap-2 border-border text-foreground backdrop-blur-sm hover:bg-foreground/[0.05]"
             asChild
           >
-            <a href="#pricing">Get Started Free</a>
+            <a href="#submit">Submit a Rule</a>
           </Button>
         </div>
 

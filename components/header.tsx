@@ -9,7 +9,7 @@ const navItems = [
   { label: "How it works", href: "#how-it-works" },
   { label: "Trending", href: "#trending" },
   { label: "Rules", href: "#rules" },
-  { label: "Pricing", href: "#pricing" },
+  { label: "Submit", href: "#submit" },
 ];
 
 export async function Header() {
@@ -63,7 +63,7 @@ export async function Header() {
                 <Link href="/sign-in">Sign In</Link>
               </Button>
               <Button size="sm" className="bg-gradient-to-r from-violet-600 to-indigo-600 text-[13px] text-white shadow-lg shadow-violet-500/20 hover:from-violet-500 hover:to-indigo-500" asChild>
-                <a href="#pricing">Get Started</a>
+                <a href="#rules">Get Started</a>
               </Button>
             </>
           )}
