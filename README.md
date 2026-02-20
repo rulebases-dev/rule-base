@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RuleBase
+
+**The open-source directory for AI editor system prompts.**
+
+Discover, copy, and share curated rules for [Cursor](https://cursor.sh), [Windsurf](https://codeium.com/windsurf), [GitHub Copilot](https://github.com/features/copilot), and more. Ship better code, faster.
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | [Next.js 16](https://nextjs.org) (App Router) |
+| UI Library | [React 19](https://react.dev) |
+| Styling | [Tailwind CSS v4](https://tailwindcss.com) |
+| Components | [Shadcn UI](https://ui.shadcn.com) |
+| Icons | [Lucide React](https://lucide.dev) |
+| Language | [TypeScript 5](https://typescriptlang.org) |
+
+## Features
+
+- **Browse & Search** — Filter rules by category, framework, or keyword in real-time
+- **One-Click Copy** — Copy any system prompt to clipboard instantly
+- **Trending Rules** — Featured section highlighting the most popular prompts
+- **Star Ratings** — Community-driven quality scores on every rule
+- **Category Filters** — Quick pills for Next.js, Python, React Native, TypeScript, and more
+- **Pricing Tiers** — Hobby (Free), Pro, and Team plans
+- **Auth Page** — Sign-in with GitHub, Google, or email
+- **Dark Mode** — Premium dark theme by default with glassmorphism effects
+- **Responsive** — Fully optimized for mobile, tablet, and desktop
+- **Smooth Navigation** — Anchor-based scroll with sticky header
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18.17+
+- npm, yarn, pnpm, or bun
+
+### Installation
+
+```bash
+git clone https://github.com/dnd21052002/rule-base.git
+cd rule-base
+npm install
+```
+
+### Development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+rule-base/
+├── app/
+│   ├── sign-in/
+│   │   └── page.tsx          # Authentication page
+│   ├── globals.css           # Global styles & design tokens
+│   ├── layout.tsx            # Root layout
+│   └── page.tsx              # Landing page
+├── components/
+│   ├── ui/                   # Shadcn UI primitives
+│   │   ├── badge.tsx
+│   │   ├── button.tsx
+│   │   └── input.tsx
+│   ├── category-pills.tsx    # Filter pills
+│   ├── cta-section.tsx       # Call-to-action banner
+│   ├── featured-rules.tsx    # Trending rules section
+│   ├── footer.tsx            # Multi-column footer
+│   ├── header.tsx            # Sticky navigation header
+│   ├── hero-section.tsx      # Full-viewport hero
+│   ├── how-it-works.tsx      # 3-step bento section
+│   ├── pricing-section.tsx   # Pricing tiers
+│   ├── prompt-card.tsx       # Rule card with copy
+│   ├── prompt-grid.tsx       # Responsive card grid
+│   └── star-rating.tsx       # Star rating display
+└── lib/
+    ├── data.ts               # Mock data & types
+    └── utils.ts              # Utility functions
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Deploy to [Vercel](https://vercel.com) with one click:
 
-## Deploy on Vercel
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fdnd21052002%2Frule-base)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
