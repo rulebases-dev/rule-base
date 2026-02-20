@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { auth } from "@/lib/auth";
-import { getUserPlan, getUserSubscription } from "@/lib/stripe/subscription";
+import { getUserPlan, getUserSubscription } from "@/lib/lemonsqueezy/subscription";
 import { ManageBillingButton } from "./manage-billing-button";
 
 export default async function DashboardPage() {
@@ -87,7 +87,9 @@ export default async function DashboardPage() {
             </div>
             <div className="flex gap-2">
               {isPro && subscription ? (
-                <ManageBillingButton />
+                <ManageBillingButton
+                  subscriptionId={subscription.lemonSqueezyId}
+                />
               ) : (
                 <Button
                   size="sm"

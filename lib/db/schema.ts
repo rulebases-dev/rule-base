@@ -37,7 +37,7 @@ export const users = pgTable("users", {
   passwordHash: text("password_hash"),
   role: roleEnum("role").default("user").notNull(),
   plan: planEnum("plan").default("free").notNull(),
-  stripeCustomerId: text("stripe_customer_id").unique(),
+  lemonSqueezyCustomerId: text("lemonsqueezy_customer_id").unique(),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { mode: "date" })
     .defaultNow()
@@ -174,12 +174,11 @@ export const subscriptions = pgTable(
     userId: text("user_id")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
-    stripeSubscriptionId: text("stripe_subscription_id").unique().notNull(),
-    stripePriceId: text("stripe_price_id").notNull(),
+    lemonSqueezyId: text("lemonsqueezy_id").unique().notNull(),
+    orderId: text("order_id").notNull(),
+    productId: text("product_id").notNull(),
+    variantId: text("variant_id").notNull(),
     status: subscriptionStatusEnum("status").notNull(),
-    currentPeriodStart: timestamp("current_period_start", {
-      mode: "date",
-    }).notNull(),
     currentPeriodEnd: timestamp("current_period_end", {
       mode: "date",
     }).notNull(),
@@ -194,7 +193,7 @@ export const subscriptions = pgTable(
   },
   (t) => [
     uniqueIndex("subscriptions_user_idx").on(t.userId),
-    index("subscriptions_stripe_idx").on(t.stripeSubscriptionId),
+    index("subscriptions_ls_idx").on(t.lemonSqueezyId),
   ]
 );
 

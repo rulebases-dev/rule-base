@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { UserMenu } from "@/components/user-menu";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { auth } from "@/lib/auth";
-import { getUserPlan } from "@/lib/stripe/subscription";
+import { getUserPlan } from "@/lib/lemonsqueezy/subscription";
 
 const navItems = [
   { label: "How it works", href: "#how-it-works" },

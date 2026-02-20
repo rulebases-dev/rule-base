@@ -59,7 +59,7 @@ export default function PricingPage() {
   async function handleUpgrade() {
     setLoading(true);
     try {
-      const res = await fetch("/api/stripe/checkout", { method: "POST" });
+      const res = await fetch("/api/lemonsqueezy/checkout", { method: "POST" });
       const data = await res.json();
 
       if (data.url) {

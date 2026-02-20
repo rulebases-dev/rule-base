@@ -4,13 +4,21 @@ import { useState } from "react";
 import { Loader2, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export function ManageBillingButton() {
+export function ManageBillingButton({
+  subscriptionId,
+}: {
+  subscriptionId: string;
+}) {
   const [loading, setLoading] = useState(false);
 
   async function handleClick() {
     setLoading(true);
     try {
-      const res = await fetch("/api/stripe/portal", { method: "POST" });
+      const res = await fetch("/api/lemonsqueezy/portal", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ subscriptionId }),
+      });
       const data = await res.json();
       if (data.url) {
         window.location.href = data.url;
