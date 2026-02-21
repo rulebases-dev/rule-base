@@ -47,7 +47,7 @@ export async function Header() {
             className="text-muted-foreground hover:text-foreground"
             asChild
           >
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/rulebases-dev/rule-base" target="_blank" rel="noopener noreferrer">
               <Github className="size-4" />
             </a>
           </Button>
