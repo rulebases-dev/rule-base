@@ -9,7 +9,7 @@ export function PromptGrid({ rules }: PromptGridProps) {
   if (rules.length === 0) {
     return (
       <div className="flex flex-col items-center gap-3 py-24 text-center">
-        <div className="mb-2 flex size-14 items-center justify-center rounded-2xl bg-white/[0.04] ring-1 ring-white/[0.06]">
+        <div className="mb-2 flex size-14 items-center justify-center rounded-2xl bg-subtle-md ring-1 ring-border">
           <span className="text-2xl">?</span>
         </div>
         <p className="text-lg font-medium">No rules found</p>

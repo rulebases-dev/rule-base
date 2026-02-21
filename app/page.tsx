@@ -30,8 +30,6 @@ export default function Home() {
     });
   }, [searchQuery, selectedCategory]);
 
-  const isFiltering = searchQuery !== "" || selectedCategory !== "All";
-
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1">
@@ -47,20 +45,17 @@ export default function Home() {
         </div>
 
         <div className="mx-auto max-w-6xl px-6">
-          <div className="h-px bg-gradient-to-r from-transparent via-foreground/[0.06] to-transparent" />
+          <div className="h-px divider-line" />
         </div>
 
-        {!isFiltering && (
-          <div className="mx-auto max-w-6xl px-6">
-            <FeaturedRules rules={rules} />
-          </div>
-        )}
+        {/* Trending - luôn hiển thị, không phụ thuộc filter */}
+        <div className="mx-auto max-w-6xl px-6">
+          <FeaturedRules rules={rules} />
+        </div>
 
-        {!isFiltering && (
-          <div className="mx-auto max-w-6xl px-6">
-            <div className="h-px bg-gradient-to-r from-transparent via-foreground/[0.06] to-transparent" />
-          </div>
-        )}
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="h-px divider-line" />
+        </div>
 
         <div className="mx-auto max-w-6xl px-6 pt-14">
           <CategoryPills
@@ -71,7 +66,7 @@ export default function Home() {
         </div>
 
         <div className="mx-auto max-w-6xl px-6">
-          <div className="h-px bg-gradient-to-r from-transparent via-foreground/[0.06] to-transparent" />
+          <div className="h-px divider-line" />
         </div>
 
         <div className="mx-auto max-w-6xl px-6">

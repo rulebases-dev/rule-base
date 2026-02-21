@@ -57,7 +57,10 @@ export default async function DashboardPage() {
                   className="size-14 rounded-full ring-2 ring-border"
                 />
               ) : (
-                <div className="flex size-14 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 text-lg font-bold text-white">
+                <div
+                  className="flex size-14 items-center justify-center rounded-full text-lg font-bold text-white"
+                  style={{ background: "linear-gradient(to bottom right, rgb(139, 92, 246), rgb(79, 70, 229))" }}
+                >
                   {session.user.name?.charAt(0) ?? "?"}
                 </div>
               )}
@@ -93,7 +96,8 @@ export default async function DashboardPage() {
               ) : (
                 <Button
                   size="sm"
-                  className="gap-1.5 bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-500/20 hover:from-violet-500 hover:to-indigo-500"
+                  className="gap-1.5 text-white shadow-lg shadow-violet-500/20 hover:opacity-90"
+                  style={{ background: "linear-gradient(to right, rgb(124, 58, 237), rgb(79, 70, 229))" }}
                   asChild
                 >
                   <Link href="/pricing">
@@ -106,7 +110,7 @@ export default async function DashboardPage() {
           </div>
 
           {isPro && subscription && (
-            <div className="mt-4 rounded-lg border border-border bg-foreground/[0.02] px-4 py-2.5 text-[13px] text-muted-foreground">
+            <div className="mt-4 rounded-lg border border-border bg-subtle-light px-4 py-2.5 text-[13px] text-muted-foreground">
               {subscription.cancelAtPeriodEnd ? (
                 <>
                   Pro access until{" "}
@@ -134,7 +138,7 @@ export default async function DashboardPage() {
               key={stat.label}
               className="glass-card flex items-center gap-4 rounded-xl p-5"
             >
-              <div className="flex size-10 items-center justify-center rounded-lg bg-foreground/[0.04]">
+              <div className="flex size-10 items-center justify-center rounded-lg bg-subtle-md">
                 <stat.icon className="size-5 text-muted-foreground" />
               </div>
               <div>
@@ -182,7 +186,7 @@ export default async function DashboardPage() {
                 <Lock className="absolute right-4 top-4 size-3.5 text-muted-foreground/40" />
               )}
               <div
-                className={`flex size-10 shrink-0 items-center justify-center rounded-lg ${isPro ? "bg-violet-500/10" : "bg-foreground/[0.04]"}`}
+                className={`flex size-10 shrink-0 items-center justify-center rounded-lg ${isPro ? "bg-violet-500/10" : "bg-subtle-md"}`}
               >
                 <feature.icon
                   className={`size-5 ${isPro ? "text-violet-500 dark:text-violet-400" : "text-muted-foreground/60"}`}

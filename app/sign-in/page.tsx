@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { ArrowLeft, Github, Loader2, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,7 +19,16 @@ function GoogleIcon({ className }: { className?: string }) {
   );
 }
 
+function getSafeCallbackUrl(raw: string | null): string {
+  if (!raw) return "/";
+  if (!raw.startsWith("/")) return "/";
+  return raw;
+}
+
 export default function SignInPage() {
+  const searchParams = useSearchParams();
+  const callbackUrl = getSafeCallbackUrl(searchParams.get("callbackUrl"));
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +38,7 @@ export default function SignInPage() {
   async function handleOAuth(provider: "github" | "google") {
     setOauthLoading(provider);
     setError(null);
-    await signIn(provider, { callbackUrl: "/" });
+    await signIn(provider, { callbackUrl });
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -46,7 +56,7 @@ export default function SignInPage() {
       if (result?.error) {
         setError("Invalid email or password");
       } else {
-        window.location.href = "/";
+        window.location.href = callbackUrl;
       }
     } catch {
       setError("Something went wrong. Please try again.");
@@ -77,7 +87,10 @@ export default function SignInPage() {
 
         {/* Logo */}
         <div className="mb-8 flex flex-col items-center gap-3">
-          <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-indigo-600 shadow-lg shadow-violet-500/25">
+          <div
+            className="flex size-10 items-center justify-center rounded-xl shadow-lg shadow-violet-500/25"
+            style={{ background: "linear-gradient(to bottom right, rgb(139, 92, 246), rgb(79, 70, 229))" }}
+          >
             <Terminal className="size-5 text-white" />
           </div>
           <div className="text-center">
@@ -101,7 +114,7 @@ export default function SignInPage() {
         <div className="space-y-2.5">
           <Button
             variant="outline"
-            className="h-10 w-full gap-2.5 border-border bg-foreground/[0.03] text-[13px] font-medium hover:bg-foreground/[0.06]"
+            className="h-10 w-full gap-2.5 border-border bg-subtle text-[13px] font-medium hover:bg-subtle-strong"
             onClick={() => handleOAuth("github")}
             disabled={oauthLoading !== null}
           >
@@ -114,7 +127,7 @@ export default function SignInPage() {
           </Button>
           <Button
             variant="outline"
-            className="h-10 w-full gap-2.5 border-border bg-foreground/[0.03] text-[13px] font-medium hover:bg-foreground/[0.06]"
+            className="h-10 w-full gap-2.5 border-border bg-subtle text-[13px] font-medium hover:bg-subtle-strong"
             onClick={() => handleOAuth("google")}
             disabled={oauthLoading !== null}
           >
@@ -152,7 +165,7 @@ export default function SignInPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="h-10 rounded-lg border-border bg-foreground/[0.03] text-[13px] placeholder:text-muted-foreground/40 focus-visible:border-violet-500/30 focus-visible:ring-2 focus-visible:ring-violet-500/15"
+              className="h-10 rounded-lg border-border bg-subtle text-[13px] placeholder:text-muted-foreground/40 focus-visible:border-violet-500/30 focus-visible:ring-2 focus-visible:ring-violet-500/15"
             />
           </div>
 
@@ -178,14 +191,15 @@ export default function SignInPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="h-10 rounded-lg border-border bg-foreground/[0.03] text-[13px] placeholder:text-muted-foreground/40 focus-visible:border-violet-500/30 focus-visible:ring-2 focus-visible:ring-violet-500/15"
+              className="h-10 rounded-lg border-border bg-subtle text-[13px] placeholder:text-muted-foreground/40 focus-visible:border-violet-500/30 focus-visible:ring-2 focus-visible:ring-violet-500/15"
             />
           </div>
 
           <Button
             type="submit"
             disabled={isLoading}
-            className="h-10 w-full bg-gradient-to-r from-violet-600 to-indigo-600 text-[13px] font-medium text-white shadow-lg shadow-violet-500/20 hover:from-violet-500 hover:to-indigo-500"
+            className="h-10 w-full text-[13px] font-medium text-white shadow-lg shadow-violet-500/20 hover:opacity-90"
+            style={{ background: "linear-gradient(to right, rgb(124, 58, 237), rgb(79, 70, 229))" }}
           >
             {isLoading ? (
               <>

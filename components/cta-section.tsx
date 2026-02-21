@@ -9,8 +9,11 @@ export function CtaSection() {
         <div className="pointer-events-none absolute -top-24 left-1/2 size-64 -translate-x-1/2 rounded-full bg-violet-500/10 blur-3xl" />
 
         <div className="relative">
-          <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 ring-1 ring-violet-500/20">
-            <Sparkles className="size-5 text-violet-500 dark:text-violet-400" />
+          <div
+            className="mx-auto mb-4 flex size-12 items-center justify-center rounded-2xl ring-1 ring-violet-500/20"
+            style={{ background: 'linear-gradient(to bottom right, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2))' }}
+          >
+            <Sparkles className="size-5" style={{ color: 'rgb(139, 92, 246)', stroke: 'rgb(139, 92, 246)' }} />
           </div>
 
           <h2 className="mb-3 text-2xl font-bold tracking-tight sm:text-3xl">
@@ -24,15 +27,16 @@ export function CtaSection() {
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <Button
               size="lg"
-              className="gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-xl shadow-violet-500/20 transition-all hover:from-violet-500 hover:to-indigo-500 hover:shadow-violet-500/30"
+              className="gap-2 text-white shadow-xl shadow-violet-500/20 transition-all hover:opacity-90 hover:shadow-violet-500/30"
+              style={{ background: 'linear-gradient(to right, rgb(124, 58, 237), rgb(79, 70, 229))' }}
             >
               Submit a Rule
-              <ArrowRight className="size-4" />
+              <ArrowRight className="size-4" style={{ color: '#fff', stroke: '#fff' }} />
             </Button>
             <Button
               variant="outline"
               size="lg"
-              className="gap-2 border-border backdrop-blur-sm hover:bg-foreground/[0.05]"
+              className="gap-2 border-border backdrop-blur-sm hover:bg-subtle-strong"
             >
               Read the Guidelines
             </Button>

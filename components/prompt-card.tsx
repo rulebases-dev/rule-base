@@ -40,7 +40,7 @@ export function PromptCard({ rule, featured = false }: PromptCardProps) {
       <div className="mb-3 flex items-start justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <div
-            className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-foreground/[0.08] to-foreground/[0.02] text-[11px] font-bold text-muted-foreground ring-1 ring-border"
+            className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-avatar-card text-[11px] font-bold text-muted-foreground ring-1 ring-border"
           >
             {rule.avatar}
           </div>
@@ -66,7 +66,7 @@ export function PromptCard({ rule, featured = false }: PromptCardProps) {
           <Badge
             key={tag}
             variant="secondary"
-            className="rounded-md border border-foreground/[0.04] bg-foreground/[0.04] px-2 py-0.5 text-[11px] font-normal text-muted-foreground/80 hover:bg-foreground/[0.08]"
+            className="rounded-md border border-border bg-subtle-md px-2 py-0.5 text-[11px] font-normal text-muted-foreground/80 hover:bg-subtle-stronger"
           >
             #{tag}
           </Badge>
@@ -90,7 +90,7 @@ export function PromptCard({ rule, featured = false }: PromptCardProps) {
           className={
             copied
               ? "h-8 gap-1.5 bg-emerald-600 px-3 text-xs text-white hover:bg-emerald-600"
-              : "h-8 gap-1.5 px-3 text-xs text-muted-foreground hover:bg-foreground/[0.06] hover:text-foreground"
+              : "h-8 gap-1.5 px-3 text-xs text-muted-foreground hover:bg-subtle-strong hover:text-foreground"
           }
         >
           {copied ? (

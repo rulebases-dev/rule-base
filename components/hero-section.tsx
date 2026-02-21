@@ -10,12 +10,12 @@ interface HeroSectionProps {
 }
 
 const AVATAR_INITIALS = ["JD", "AK", "MR", "SL", "NP"];
-const AVATAR_COLORS = [
-  "from-violet-500 to-fuchsia-500",
-  "from-sky-500 to-cyan-500",
-  "from-amber-500 to-orange-500",
-  "from-emerald-500 to-teal-500",
-  "from-rose-500 to-pink-500",
+const AVATAR_GRADIENTS: React.CSSProperties[] = [
+  { background: 'linear-gradient(to bottom right, rgb(139, 92, 246), rgb(217, 70, 239))' },
+  { background: 'linear-gradient(to bottom right, rgb(14, 165, 233), rgb(6, 182, 212))' },
+  { background: 'linear-gradient(to bottom right, rgb(245, 158, 11), rgb(249, 115, 22))' },
+  { background: 'linear-gradient(to bottom right, rgb(16, 185, 129), rgb(20, 184, 166))' },
+  { background: 'linear-gradient(to bottom right, rgb(244, 63, 94), rgb(236, 72, 153))' },
 ];
 
 export function HeroSection({ searchQuery, onSearchChange }: HeroSectionProps) {
@@ -28,15 +28,26 @@ export function HeroSection({ searchQuery, onSearchChange }: HeroSectionProps) {
 
       <div className="relative flex flex-1 flex-col items-center justify-center gap-6 pb-12 text-center">
         {/* Badge */}
-        <div className="animate-fade-in inline-flex items-center gap-2 rounded-full border border-border bg-foreground/[0.03] px-3.5 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur-sm">
-          <Sparkles className="size-3 text-violet-500 dark:text-violet-400" />
+        <div className="animate-fade-in inline-flex items-center gap-2 rounded-full border border-border bg-subtle px-3.5 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur-sm">
+          <Sparkles className="size-3" style={{ color: 'rgb(139, 92, 246)', stroke: 'rgb(139, 92, 246)' }} />
           Open-source prompt directory
         </div>
 
         {/* Headline */}
         <h1 className="animate-fade-in-up max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
           Supercharge your{" "}
-          <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
+          <span
+            className="gradient-text"
+            style={{
+              display: 'inline-block',
+              background: 'linear-gradient(to right, rgb(167, 139, 250), rgb(192, 132, 252), rgb(217, 70, 239))',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              color: 'transparent',
+              WebkitBoxDecorationBreak: 'clone',
+            }}
+          >
             AI Code Editor
           </span>
         </h1>
@@ -61,7 +72,7 @@ export function HeroSection({ searchQuery, onSearchChange }: HeroSectionProps) {
             placeholder="Search rules... (e.g. Next.js, Python, FastAPI)"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="h-12 rounded-xl border-border bg-foreground/[0.03] pl-11 pr-4 text-[15px] shadow-xl shadow-black/5 backdrop-blur-md transition-all placeholder:text-muted-foreground/50 focus-visible:border-violet-500/30 focus-visible:bg-foreground/[0.05] focus-visible:ring-2 focus-visible:ring-violet-500/15 dark:shadow-black/20"
+            className="h-12 rounded-xl border-border bg-subtle pl-11 pr-4 text-[15px] shadow-xl shadow-black/5 backdrop-blur-md transition-all placeholder:text-muted-foreground/50 focus-visible:border-violet-500/30 focus-visible:bg-subtle-strong focus-visible:ring-2 focus-visible:ring-violet-500/15 dark:shadow-black/20"
           />
         </div>
 
@@ -72,18 +83,21 @@ export function HeroSection({ searchQuery, onSearchChange }: HeroSectionProps) {
         >
           <Button
             size="lg"
-            className="gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-xl shadow-violet-500/20 transition-all hover:from-violet-500 hover:to-indigo-500 hover:shadow-violet-500/30"
+            className="hero-cta-gradient gap-2 text-white shadow-xl shadow-violet-500/20 transition-all hover:opacity-90 hover:shadow-violet-500/30"
             asChild
           >
-            <a href="#rules">
+            <a
+              href="#rules"
+              style={{ background: 'linear-gradient(to right, rgb(124, 58, 237), rgb(79, 70, 229))', color: '#fff' }}
+            >
               Browse Rules
-              <ArrowRight className="size-4" />
+              <ArrowRight className="size-4" style={{ color: '#fff', stroke: '#fff' }} />
             </a>
           </Button>
           <Button
             variant="outline"
             size="lg"
-            className="gap-2 border-border text-foreground backdrop-blur-sm hover:bg-foreground/[0.05]"
+            className="gap-2 border-border text-foreground backdrop-blur-sm hover:bg-subtle-strong"
             asChild
           >
             <a href="#submit">Submit a Rule</a>
@@ -99,7 +113,8 @@ export function HeroSection({ searchQuery, onSearchChange }: HeroSectionProps) {
             {AVATAR_INITIALS.map((initials, i) => (
               <div
                 key={initials}
-                className={`flex size-7 items-center justify-center rounded-full bg-gradient-to-br ${AVATAR_COLORS[i]} ring-2 ring-background text-[10px] font-bold text-white`}
+                className="flex size-7 items-center justify-center rounded-full ring-2 ring-background text-[10px] font-bold text-white"
+                style={AVATAR_GRADIENTS[i]}
               >
                 {initials}
               </div>

@@ -8,20 +8,23 @@ import { auth } from "@/lib/auth";
 import { getUserPlan } from "@/lib/lemonsqueezy/subscription";
 
 const navItems = [
-  { label: "How it works", href: "#how-it-works" },
-  { label: "Trending", href: "#trending" },
-  { label: "Rules", href: "#rules" },
-  { label: "Submit", href: "#submit" },
+  { label: "How it works", href: "/#how-it-works" },
+  { label: "Trending", href: "/#trending" },
+  { label: "Rules", href: "/#rules" },
+  { label: "Submit", href: "/#submit" },
 ];
 
 export async function Header() {
   const session = await auth();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/60 backdrop-blur-xl">
+    <header className="header-bg sticky top-0 z-50 w-full border-b border-border backdrop-blur-xl">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-2.5 transition-opacity hover:opacity-80">
-          <div className="flex size-7 items-center justify-center rounded-md bg-gradient-to-br from-violet-500 to-indigo-600 shadow-lg shadow-violet-500/20">
+          <div
+            className="flex size-7 items-center justify-center rounded-md shadow-lg shadow-violet-500/20"
+            style={{ background: 'linear-gradient(to bottom right, rgb(139, 92, 246), rgb(79, 70, 229))' }}
+          >
             <Terminal className="size-3.5 text-white" />
           </div>
           <span className="text-[15px] font-semibold tracking-tight">RuleBase</span>
@@ -29,13 +32,13 @@ export async function Header() {
 
         <nav className="hidden items-center gap-1 md:flex">
           {navItems.map((item) => (
-            <a
+            <Link
               key={item.label}
               href={item.href}
-              className="rounded-md px-3 py-1.5 text-[13px] text-muted-foreground transition-colors hover:bg-foreground/[0.05] hover:text-foreground"
+              className="rounded-md px-3 py-1.5 text-[13px] text-muted-foreground transition-colors hover:bg-subtle-strong hover:text-foreground"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -65,8 +68,13 @@ export async function Header() {
               <Button variant="ghost" size="sm" className="text-[13px] text-muted-foreground" asChild>
                 <Link href="/sign-in">Sign In</Link>
               </Button>
-              <Button size="sm" className="bg-gradient-to-r from-violet-600 to-indigo-600 text-[13px] text-white shadow-lg shadow-violet-500/20 hover:from-violet-500 hover:to-indigo-500" asChild>
-                <a href="#rules">Get Started</a>
+              <Button size="sm" className="text-[13px] text-white shadow-lg shadow-violet-500/20 hover:opacity-90" asChild>
+                <Link
+                  href="/sign-in?callbackUrl=/dashboard"
+                  style={{ background: 'linear-gradient(to right, rgb(124, 58, 237), rgb(79, 70, 229))', color: '#fff' }}
+                >
+                  Get Started
+                </Link>
               </Button>
             </>
           )}

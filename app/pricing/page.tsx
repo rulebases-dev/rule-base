@@ -87,13 +87,13 @@ export default function PricingPage() {
         </Link>
 
         <div className="mb-14 text-center">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-foreground/[0.03] px-3.5 py-1.5 text-xs font-medium text-muted-foreground">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-subtle px-3.5 py-1.5 text-xs font-medium text-muted-foreground">
             <Crown className="size-3 text-amber-500 dark:text-amber-400" />
             Open Core Model
           </div>
           <h1 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
             Free for everyone.{" "}
-            <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
+            <span className="gradient-text">
               Pro for power users.
             </span>
           </h1>
@@ -123,8 +123,8 @@ export default function PricingPage() {
                     className={cn(
                       "flex size-9 items-center justify-center rounded-xl",
                       tier.popular
-                        ? "bg-gradient-to-br from-violet-500 to-indigo-600 shadow-lg shadow-violet-500/20"
-                        : "bg-foreground/[0.06] ring-1 ring-border",
+                        ? "shadow-lg shadow-violet-500/20"
+                        : "bg-subtle-strong ring-1 ring-border",
                     )}
                   >
                     {tier.popular ? (
@@ -158,7 +158,8 @@ export default function PricingPage() {
 
               {tier.action === "pro" ? (
                 <Button
-                  className="mb-7 w-full gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-500/20 hover:from-violet-500 hover:to-indigo-500"
+                  className="mb-7 w-full gap-2 text-white shadow-lg shadow-violet-500/20 hover:opacity-90"
+                  style={{ background: "linear-gradient(to right, rgb(124, 58, 237), rgb(79, 70, 229))" }}
                   onClick={handleUpgrade}
                   disabled={loading}
                 >
@@ -171,7 +172,7 @@ export default function PricingPage() {
                 </Button>
               ) : (
                 <Button
-                  className="mb-7 w-full border-border bg-foreground/[0.04] text-foreground hover:bg-foreground/[0.08]"
+                  className="mb-7 w-full border-border bg-subtle-md text-foreground hover:bg-subtle-stronger"
                   variant="outline"
                   asChild
                 >

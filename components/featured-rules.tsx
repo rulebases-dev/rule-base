@@ -13,8 +13,11 @@ export function FeaturedRules({ rules }: FeaturedRulesProps) {
   return (
     <section id="trending" className="scroll-mt-20 py-16">
       <div className="mb-8 flex items-center gap-2.5">
-        <div className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500/20 to-orange-500/20 ring-1 ring-amber-500/20">
-          <TrendingUp className="size-4 text-amber-500 dark:text-amber-400" />
+        <div
+          className="flex size-8 items-center justify-center rounded-lg ring-1 ring-amber-500/20"
+          style={{ background: 'linear-gradient(to bottom right, rgba(245, 158, 11, 0.2), rgba(249, 115, 22, 0.2))' }}
+        >
+          <TrendingUp className="size-4" style={{ color: 'rgb(245, 158, 11)', stroke: 'rgb(245, 158, 11)' }} />
         </div>
         <div>
           <h2 className="text-xl font-bold tracking-tight">Trending Rules</h2>

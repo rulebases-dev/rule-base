@@ -30,7 +30,10 @@ export function UserMenu({ name, image, email }: UserMenuProps) {
             className="size-7 rounded-full ring-1 ring-border"
           />
         ) : (
-          <div className="flex size-7 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 text-[10px] font-bold text-white ring-1 ring-border">
+          <div
+            className="flex size-7 items-center justify-center rounded-full text-[10px] font-bold text-white ring-1 ring-border"
+            style={{ background: "linear-gradient(to bottom right, rgb(139, 92, 246), rgb(79, 70, 229))" }}
+          >
             {initials}
           </div>
         )}

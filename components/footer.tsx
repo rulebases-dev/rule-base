@@ -15,7 +15,10 @@ export function Footer() {
           {/* Brand column */}
           <div className="lg:col-span-2">
             <div className="mb-4 flex items-center gap-2.5">
-              <div className="flex size-7 items-center justify-center rounded-md bg-gradient-to-br from-violet-500 to-indigo-600">
+              <div
+                className="flex size-7 items-center justify-center rounded-md"
+                style={{ background: 'linear-gradient(to bottom right, rgb(139, 92, 246), rgb(79, 70, 229))' }}
+              >
                 <Terminal className="size-3.5 text-white" />
               </div>
               <span className="text-[15px] font-semibold tracking-tight">
@@ -28,14 +31,16 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-3">
               <a
-                href="#"
-                className="flex size-8 items-center justify-center rounded-lg bg-foreground/[0.04] text-muted-foreground ring-1 ring-border transition-all hover:bg-foreground/[0.08] hover:text-foreground"
+                href="https://github.com/rulebases-dev/rule-base"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex size-8 items-center justify-center rounded-lg bg-subtle-md text-muted-foreground ring-1 ring-border transition-all hover:bg-subtle-stronger hover:text-foreground"
               >
                 <Github className="size-4" />
               </a>
               <a
                 href="#"
-                className="flex size-8 items-center justify-center rounded-lg bg-foreground/[0.04] text-muted-foreground ring-1 ring-border transition-all hover:bg-foreground/[0.08] hover:text-foreground"
+                className="flex size-8 items-center justify-center rounded-lg bg-subtle-md text-muted-foreground ring-1 ring-border transition-all hover:bg-subtle-stronger hover:text-foreground"
               >
                 <Twitter className="size-4" />
               </a>
@@ -66,9 +71,6 @@ export function Footer() {
         <div className="flex flex-col items-center justify-between gap-3 border-t border-border py-6 sm:flex-row">
           <p className="text-xs text-muted-foreground/60" suppressHydrationWarning>
             &copy; {new Date().getFullYear()} RuleBase. All rights reserved.
-          </p>
-          <p className="text-xs text-muted-foreground/40">
-            Built with Next.js, Tailwind CSS & Shadcn UI
           </p>
         </div>
       </div>
