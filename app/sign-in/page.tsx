@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
@@ -25,7 +25,7 @@ function getSafeCallbackUrl(raw: string | null): string {
   return raw;
 }
 
-export default function SignInPage() {
+function SignInContent() {
   const searchParams = useSearchParams();
   const callbackUrl = getSafeCallbackUrl(searchParams.get("callbackUrl"));
 
@@ -224,5 +224,17 @@ export default function SignInPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense fallback={
+      <div className="relative flex min-h-screen items-center justify-center">
+        <div className="size-8 animate-spin rounded-full border-2 border-violet-500 border-t-transparent" />
+      </div>
+    }>
+      <SignInContent />
+    </Suspense>
   );
 }
