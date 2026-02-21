@@ -6,9 +6,22 @@ import { eq } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { users } from "@/lib/db/schema";
 import { signUpSchema, type SignUpInput } from "@/lib/validators/auth";
-import { signIn } from "@/lib/auth";
+import { verifyTurnstileToken } from "@/lib/turnstile";
 
-export async function registerUser(input: SignUpInput) {
+export async function registerUser(
+  input: SignUpInput,
+  turnstileToken?: string
+) {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  if (secret) {
+    if (!turnstileToken) {
+      return { error: { _form: ["Please complete the verification."] } };
+    }
+    if (!(await verifyTurnstileToken(turnstileToken))) {
+      return { error: { _form: ["Verification failed. Please try again."] } };
+    }
+  }
+
   const parsed = signUpSchema.safeParse(input);
 
   if (!parsed.success) {
@@ -33,9 +46,5 @@ export async function registerUser(input: SignUpInput) {
     passwordHash,
   });
 
-  await signIn("credentials", {
-    email,
-    password,
-    redirectTo: "/",
-  });
+  return { success: true };
 }

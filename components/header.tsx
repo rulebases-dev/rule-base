@@ -37,7 +37,7 @@ export async function Header() {
             <Link
               key={item.label}
               href={item.href}
-              className="rounded-md px-3 py-1.5 text-[13px] text-muted-foreground transition-colors hover:bg-subtle-strong hover:text-foreground"
+              className="rounded-md px-3 py-1.5 text-[13px] font-semibold text-muted-foreground transition-colors hover:bg-subtle-strong hover:text-foreground"
             >
               {item.label}
             </Link>
@@ -72,7 +72,7 @@ export async function Header() {
               </Button>
               <Button size="sm" className="text-[13px] text-white shadow-lg shadow-violet-500/20 hover:opacity-90" asChild>
                 <Link
-                  href="/sign-in?callbackUrl=/dashboard"
+                  href="/sign-up?callbackUrl=/dashboard"
                   style={{ background: 'linear-gradient(to right, rgb(124, 58, 237), rgb(79, 70, 229))', color: '#fff' }}
                 >
                   Get Started

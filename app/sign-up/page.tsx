@@ -3,12 +3,12 @@
 import { Suspense, useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { signIn } from "next-auth/react";
 import { ArrowLeft, Github, Loader2, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TurnstileWidget } from "@/components/turnstile-widget";
-import { verifyTurnstileToken } from "@/lib/turnstile";
+import { signIn } from "next-auth/react";
+import { registerUser } from "@/lib/actions/auth";
 
 function GoogleIcon({ className }: { className?: string }) {
   return (
@@ -27,68 +27,54 @@ function getSafeCallbackUrl(raw: string | null): string {
   return raw;
 }
 
-function SignInContent() {
+function SignUpContent() {
   const searchParams = useSearchParams();
   const callbackUrl = getSafeCallbackUrl(searchParams.get("callbackUrl"));
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [oauthLoading, setOauthLoading] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
   const turnstileKey = useRef(0);
 
   async function handleOAuth(provider: "github" | "google") {
     setOauthLoading(provider);
-    setError(null);
+    setFieldErrors({});
     await signIn(provider, { callbackUrl });
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setError(null);
+    setIsLoading(true);
+    setFieldErrors({});
 
-    const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
-    if (siteKey && !turnstileToken) {
-      setError("Please complete the verification");
+    const result = await registerUser({ name, email, password });
+
+    if (result?.error) {
+      setFieldErrors(result.error);
+      setIsLoading(false);
       return;
     }
 
-    if (siteKey && turnstileToken) {
-      const valid = await verifyTurnstileToken(turnstileToken);
-      if (!valid) {
-        setError("Verification failed. Please try again.");
-        setTurnstileToken(null);
-        turnstileKey.current += 1;
-        return;
-      }
-    }
-
-    setIsLoading(true);
-
-    try {
-      const result = await signIn("credentials", {
+    if (result?.success) {
+      await signIn("credentials", {
         email,
         password,
-        redirect: false,
+        callbackUrl,
       });
-
-      if (result?.error) {
-        setError("Invalid email or password");
-        setTurnstileToken(null);
-        turnstileKey.current += 1;
-      } else {
-        window.location.href = callbackUrl;
-      }
-    } catch {
-      setError("Something went wrong. Please try again.");
-      setTurnstileToken(null);
-      turnstileKey.current += 1;
-    } finally {
-      setIsLoading(false);
     }
   }
+
+  const hasError = Object.keys(fieldErrors).length > 0;
+  const errorMessage = hasError
+    ? Object.values(fieldErrors)
+        .flat()
+        .filter((m) => m)
+        .join(". ")
+    : null;
 
   return (
     <div className="relative flex min-h-screen items-center justify-center px-6">
@@ -120,18 +106,18 @@ function SignInContent() {
           </div>
           <div className="text-center">
             <h1 className="text-lg font-semibold tracking-tight">
-              Sign in to RuleBase
+              Create your RuleBase account
             </h1>
             <p className="mt-1 text-sm text-muted-foreground">
-              Welcome back. Access your saved rules.
+              Start saving and sharing prompts.
             </p>
           </div>
         </div>
 
         {/* Error message */}
-        {error && (
+        {errorMessage && (
           <div className="mb-4 rounded-lg border border-red-500/20 bg-red-500/10 px-3 py-2 text-center text-[13px] text-red-600 dark:text-red-400">
-            {error}
+            {errorMessage}
           </div>
         )}
 
@@ -148,7 +134,7 @@ function SignInContent() {
             ) : (
               <Github className="size-4" />
             )}
-            Sign in with GitHub
+            Sign up with GitHub
           </Button>
           <Button
             variant="outline"
@@ -161,7 +147,7 @@ function SignInContent() {
             ) : (
               <GoogleIcon className="size-4" />
             )}
-            Sign in with Google
+            Sign up with Google
           </Button>
         </div>
 
@@ -176,6 +162,24 @@ function SignInContent() {
 
         {/* Email form */}
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <label
+              htmlFor="name"
+              className="text-[13px] font-medium text-muted-foreground"
+            >
+              Name
+            </label>
+            <Input
+              id="name"
+              type="text"
+              placeholder="Your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="h-10 rounded-lg border-border bg-subtle text-[13px] placeholder:text-muted-foreground/40 focus-visible:border-violet-500/30 focus-visible:ring-2 focus-visible:ring-violet-500/15"
+            />
+          </div>
+
           <div className="space-y-2">
             <label
               htmlFor="email"
@@ -195,24 +199,16 @@ function SignInContent() {
           </div>
 
           <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <label
-                htmlFor="password"
-                className="text-[13px] font-medium text-muted-foreground"
-              >
-                Password
-              </label>
-              <a
-                href="#"
-                className="text-xs text-violet-500 transition-colors hover:text-violet-600 dark:text-violet-400 dark:hover:text-violet-300"
-              >
-                Forgot password?
-              </a>
-            </div>
+            <label
+              htmlFor="password"
+              className="text-[13px] font-medium text-muted-foreground"
+            >
+              Password
+            </label>
             <Input
               id="password"
               type="password"
-              placeholder="Enter your password"
+              placeholder="Min. 8 chars, 1 upper, 1 lower, 1 number"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -237,22 +233,22 @@ function SignInContent() {
             {isLoading ? (
               <>
                 <Loader2 className="size-4 animate-spin" />
-                Signing in...
+                Creating account...
               </>
             ) : (
-              "Sign In"
+              "Create Account"
             )}
           </Button>
         </form>
 
-        {/* Sign up link */}
+        {/* Sign in link */}
         <p className="mt-6 text-center text-[13px] text-muted-foreground">
-          Don&apos;t have an account?{" "}
+          Already have an account?{" "}
           <Link
-            href={`/sign-up${callbackUrl !== "/" ? `?callbackUrl=${encodeURIComponent(callbackUrl)}` : ""}`}
+            href={`/sign-in${callbackUrl !== "/" ? `?callbackUrl=${encodeURIComponent(callbackUrl)}` : ""}`}
             className="font-medium text-violet-500 transition-colors hover:text-violet-600 dark:text-violet-400 dark:hover:text-violet-300"
           >
-            Sign up
+            Sign in
           </Link>
         </p>
       </div>
@@ -260,14 +256,14 @@ function SignInContent() {
   );
 }
 
-export default function SignInPage() {
+export default function SignUpPage() {
   return (
     <Suspense fallback={
       <div className="relative flex min-h-screen items-center justify-center">
         <div className="size-8 animate-spin rounded-full border-2 border-violet-500 border-t-transparent" />
       </div>
     }>
-      <SignInContent />
+      <SignUpContent />
     </Suspense>
   );
 }
