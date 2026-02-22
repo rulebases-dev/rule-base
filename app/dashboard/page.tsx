@@ -1,20 +1,7 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  BarChart3,
-  Copy,
-  Crown,
-  FileText,
-  Lock,
-  Settings,
-  Zap,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, BarChart3, Copy, FileText, Lock, Zap } from "lucide-react";
 import { auth } from "@/lib/auth";
-import { getUserPlan, getUserSubscription } from "@/lib/lemonsqueezy/subscription";
-import { ManageBillingButton } from "./manage-billing-button";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -22,12 +9,6 @@ export default async function DashboardPage() {
   if (!session?.user?.id) {
     redirect("/sign-in");
   }
-
-  const [plan, subscription] = await Promise.all([
-    getUserPlan(session.user.id),
-    getUserSubscription(session.user.id),
-  ]);
-  const isPro = plan === "pro";
 
   const stats = [
     { label: "Rules Created", value: "0", icon: FileText },
@@ -67,70 +48,15 @@ export default async function DashboardPage() {
                 </div>
               )}
               <div className="min-w-0 flex-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <h1 className="truncate text-lg font-bold tracking-tight sm:text-xl">
-                    {session.user.name ?? session.user.email}
-                  </h1>
-                  {isPro ? (
-                    <Badge className="shrink-0 gap-1 border-violet-500/30 bg-violet-500/10 text-violet-600 dark:text-violet-300">
-                      <Crown className="size-3" />
-                      Pro
-                    </Badge>
-                  ) : (
-                    <Badge
-                      variant="secondary"
-                      className="shrink-0 text-muted-foreground"
-                    >
-                      Free
-                    </Badge>
-                  )}
-                </div>
+                <h1 className="truncate text-lg font-bold tracking-tight sm:text-xl">
+                  {session.user.name ?? session.user.email}
+                </h1>
                 <p className="truncate text-sm text-muted-foreground">
                   {session.user.email}
                 </p>
               </div>
             </div>
-            <div className="flex w-full shrink-0 gap-2 sm:w-auto">
-              {isPro && subscription ? (
-                <ManageBillingButton
-                  subscriptionId={subscription.lemonSqueezyId}
-                />
-              ) : (
-                <Button
-                  size="sm"
-                  className="w-full gap-1.5 text-white shadow-lg shadow-violet-500/20 hover:opacity-90 sm:w-auto"
-                  style={{ background: "linear-gradient(to right, rgb(124, 58, 237), rgb(79, 70, 229))" }}
-                  asChild
-                >
-                  <Link href="/pricing">
-                    <Zap className="size-3.5" />
-                    Upgrade to Pro
-                  </Link>
-                </Button>
-              )}
-            </div>
           </div>
-
-          {isPro && subscription && (
-            <div className="mt-4 rounded-lg border border-border bg-subtle-light px-4 py-2.5 text-[13px] text-muted-foreground">
-              {subscription.cancelAtPeriodEnd ? (
-                <>
-                  Pro access until{" "}
-                  <span className="font-medium text-foreground">
-                    {subscription.currentPeriodEnd.toLocaleDateString()}
-                  </span>
-                  . Your subscription will not renew.
-                </>
-              ) : (
-                <>
-                  Next billing date:{" "}
-                  <span className="font-medium text-foreground">
-                    {subscription.currentPeriodEnd.toLocaleDateString()}
-                  </span>
-                </>
-              )}
-            </div>
-          )}
         </div>
 
         {/* Stats */}
@@ -153,9 +79,9 @@ export default async function DashboardPage() {
           ))}
         </div>
 
-        {/* Pro features grid */}
+        {/* Features (coming soon) */}
         <h2 className="mb-4 text-lg font-semibold tracking-tight">
-          {isPro ? "Your Pro Features" : "Unlock with Pro"}
+          Coming soon
         </h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {[
@@ -174,25 +100,13 @@ export default async function DashboardPage() {
               description: "Get AI-powered rule recommendations for your stack",
               icon: Zap,
             },
-            {
-              title: "Manage Billing",
-              description: "View invoices and manage your subscription",
-              icon: Settings,
-            },
           ].map((feature) => (
             <div
               key={feature.title}
-              className={`glass-card relative flex items-start gap-4 rounded-xl p-5 ${!isPro ? "opacity-60" : ""}`}
+              className="glass-card relative flex items-start gap-4 rounded-xl p-5"
             >
-              {!isPro && (
-                <Lock className="absolute right-4 top-4 size-3.5 text-muted-foreground/40" />
-              )}
-              <div
-                className={`flex size-10 shrink-0 items-center justify-center rounded-lg ${isPro ? "bg-violet-500/10" : "bg-subtle-md"}`}
-              >
-                <feature.icon
-                  className={`size-5 ${isPro ? "text-violet-500 dark:text-violet-400" : "text-muted-foreground/60"}`}
-                />
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-subtle-md">
+                <feature.icon className="size-5 text-muted-foreground/60" />
               </div>
               <div>
                 <h3 className="text-sm font-semibold">{feature.title}</h3>

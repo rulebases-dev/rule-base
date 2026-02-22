@@ -68,24 +68,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, user, trigger }) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-      }
-      if (trigger === "signIn" || trigger === "update") {
-        const dbUser = await db.query.users.findFirst({
-          where: eq(users.id, token.id as string),
-          columns: { plan: true },
-        });
-        token.plan = dbUser?.plan ?? "free";
       }
       return token;
     },
     session({ session, token }) {
       if (session.user && token.id) {
         session.user.id = token.id as string;
-        (session.user as unknown as Record<string, unknown>).plan =
-          (token.plan as string) ?? "free";
       }
       return session;
     },

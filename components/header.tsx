@@ -1,12 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Crown, Github } from "lucide-react";
+import { Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { UserMenu } from "@/components/user-menu";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { auth } from "@/lib/auth";
-import { getUserPlan } from "@/lib/lemonsqueezy/subscription";
 
 const navItems = [
   { label: "How it works", href: "/#how-it-works" },
@@ -63,7 +61,6 @@ export async function Header() {
               name={session.user.name}
               image={session.user.image}
               email={session.user.email}
-              userId={session.user.id!}
             />
           ) : (
             <>
@@ -86,27 +83,17 @@ export async function Header() {
   );
 }
 
-async function HeaderUser({
+function HeaderUser({
   name,
   image,
   email,
-  userId,
 }: {
   name: string | null | undefined;
   image: string | null | undefined;
   email: string | null | undefined;
-  userId: string;
 }) {
-  const plan = await getUserPlan(userId);
-
   return (
     <div className="flex items-center gap-2">
-      {plan === "pro" && (
-        <Badge className="gap-1 border-violet-500/30 bg-violet-500/10 px-1.5 py-0.5 text-[10px] text-violet-600 hover:bg-violet-500/10 dark:text-violet-300">
-          <Crown className="size-2.5" />
-          Pro
-        </Badge>
-      )}
       <Button
         variant="ghost"
         size="sm"

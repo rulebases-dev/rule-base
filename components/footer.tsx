@@ -1,10 +1,29 @@
-import { Github, Terminal, Twitter } from "lucide-react";
+import { Github, Twitter } from "lucide-react";
 import Image from "next/image";
 
-const footerLinks = {
-  Product: ["Browse Rules", "Submit Rule", "API", "Changelog"],
-  Community: ["Discord", "GitHub Discussions", "Twitter", "Blog"],
-  Legal: ["Privacy Policy", "Terms of Service", "License"],
+const footerLinks: Record<string, { label: string; href: string }[]> = {
+  Product: [
+    { label: "Browse Rules", href: "/#rules" },
+    { label: "Submit Rule", href: "/#submit" },
+    { label: "API", href: "#" },
+    { label: "Changelog", href: "#" },
+  ],
+  Community: [
+    { label: "Discord", href: "#" },
+    { label: "GitHub Discussions", href: "#" },
+    { label: "Twitter", href: "#" },
+    { label: "Blog", href: "#" },
+  ],
+  Support: [
+    { label: "Support us", href: "/support" },
+    { label: "GitHub Sponsors", href: "https://github.com/sponsors/rulebases-dev" },
+    { label: "Ko-fi", href: "https://ko-fi.com/rulebases" },
+  ],
+  Legal: [
+    { label: "Privacy Policy", href: "#" },
+    { label: "Terms of Service", href: "#" },
+    { label: "License", href: "#" },
+  ],
 };
 
 export function Footer() {
@@ -54,12 +73,14 @@ export function Footer() {
               <h3 className="mb-3.5 text-sm font-medium">{category}</h3>
               <ul className="space-y-2.5">
                 {links.map((link) => (
-                  <li key={link}>
+                  <li key={link.label}>
                     <a
-                      href="#"
+                      href={link.href}
+                      target={link.href.startsWith("http") ? "_blank" : undefined}
+                      rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
                       className="text-[13px] text-muted-foreground transition-colors hover:text-foreground"
                     >
-                      {link}
+                      {link.label}
                     </a>
                   </li>
                 ))}
