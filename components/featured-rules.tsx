@@ -1,9 +1,9 @@
 import { TrendingUp } from "lucide-react";
 import { PromptCard } from "@/components/prompt-card";
-import type { Rule } from "@/lib/data";
+import type { RuleForUI } from "@/lib/rules";
 
 interface FeaturedRulesProps {
-  rules: Rule[];
+  rules: RuleForUI[];
 }
 
 export function FeaturedRules({ rules }: FeaturedRulesProps) {

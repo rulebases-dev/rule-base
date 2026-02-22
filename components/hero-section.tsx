@@ -1,13 +1,5 @@
-"use client";
-
-import { ArrowRight, Search, Sparkles } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-interface HeroSectionProps {
-  searchQuery: string;
-  onSearchChange: (query: string) => void;
-}
 
 const AVATAR_INITIALS = ["JD", "AK", "MR", "SL", "NP"];
 const AVATAR_GRADIENTS: React.CSSProperties[] = [
@@ -18,7 +10,7 @@ const AVATAR_GRADIENTS: React.CSSProperties[] = [
   { background: 'linear-gradient(to bottom right, rgb(244, 63, 94), rgb(236, 72, 153))' },
 ];
 
-export function HeroSection({ searchQuery, onSearchChange }: HeroSectionProps) {
+export function HeroSection() {
   return (
     <section id="hero" className="relative flex min-h-[calc(100vh-3.5rem)] overflow-hidden">
       {/* Background grid */}
@@ -60,21 +52,6 @@ export function HeroSection({ searchQuery, onSearchChange }: HeroSectionProps) {
           Discover, copy, and share curated system prompts for Cursor, Windsurf,
           Copilot, and more. Ship better code, faster.
         </p>
-
-        {/* Search bar */}
-        <div
-          className="animate-fade-in-up relative mt-2 w-full max-w-xl"
-          style={{ animationDelay: "0.2s" }}
-        >
-          <Search className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground/60" />
-          <Input
-            type="text"
-            placeholder="Search rules... (e.g. Next.js, Python, FastAPI)"
-            value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
-            className="h-12 rounded-xl border-border bg-subtle pl-11 pr-4 text-[15px] shadow-xl shadow-black/5 backdrop-blur-md transition-all placeholder:text-muted-foreground/50 focus-visible:border-violet-500/30 focus-visible:bg-subtle-strong focus-visible:ring-2 focus-visible:ring-violet-500/15 dark:shadow-black/20"
-          />
-        </div>
 
         {/* CTA buttons */}
         <div

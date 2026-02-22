@@ -1,8 +1,8 @@
 import { PromptCard } from "@/components/prompt-card";
-import type { Rule } from "@/lib/data";
+import type { RuleForUI } from "@/lib/rules";
 
 interface PromptGridProps {
-  rules: Rule[];
+  rules: RuleForUI[];
 }
 
 export function PromptGrid({ rules }: PromptGridProps) {

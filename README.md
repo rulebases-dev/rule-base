@@ -58,37 +58,6 @@ npm run build
 npm start
 ```
 
-## Project Structure
-
-```
-rule-base/
-├── app/
-│   ├── sign-in/
-│   │   └── page.tsx          # Authentication page
-│   ├── globals.css           # Global styles & design tokens
-│   ├── layout.tsx            # Root layout
-│   └── page.tsx              # Landing page
-├── components/
-│   ├── ui/                   # Shadcn UI primitives
-│   │   ├── badge.tsx
-│   │   ├── button.tsx
-│   │   └── input.tsx
-│   ├── category-pills.tsx    # Filter pills
-│   ├── cta-section.tsx       # Call-to-action banner
-│   ├── featured-rules.tsx    # Trending rules section
-│   ├── footer.tsx            # Multi-column footer
-│   ├── header.tsx            # Sticky navigation header
-│   ├── hero-section.tsx      # Full-viewport hero
-│   ├── how-it-works.tsx      # 3-step bento section
-│   ├── pricing-section.tsx   # Pricing tiers
-│   ├── prompt-card.tsx       # Rule card with copy
-│   ├── prompt-grid.tsx       # Responsive card grid
-│   └── star-rating.tsx       # Star rating display
-└── lib/
-    ├── data.ts               # Mock data & types
-    └── utils.ts              # Utility functions
-```
-
 ## Deploy
 
 Deploy to [Vercel](https://vercel.com) with one click:

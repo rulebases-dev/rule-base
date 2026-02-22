@@ -1,43 +1,33 @@
-"use client";
-
-import { useMemo, useState } from "react";
 import { HeroSection } from "@/components/hero-section";
 import { HowItWorks } from "@/components/how-it-works";
 import { FeaturedRules } from "@/components/featured-rules";
-import { CategoryPills } from "@/components/category-pills";
-import { PromptGrid } from "@/components/prompt-grid";
-
+import { RulesSection } from "@/components/rules-section";
 import { CtaSection } from "@/components/cta-section";
-import { type Category, rules } from "@/lib/data";
+import { getRules, getCategories } from "@/lib/rules";
 
-export default function Home() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<Category>("All");
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string; category?: string }>;
+}) {
+  const { q = "", category = "all" } = await searchParams;
 
-  const filteredRules = useMemo(() => {
-    return rules.filter((rule) => {
-      const matchesCategory =
-        selectedCategory === "All" || rule.category === selectedCategory;
+  const [allRules, categories] = await Promise.all([
+    getRules({ q: q || undefined, categorySlug: category || undefined }),
+    getCategories(),
+  ]);
 
-      const query = searchQuery.toLowerCase();
-      const matchesSearch =
-        query === "" ||
-        rule.title.toLowerCase().includes(query) ||
-        rule.description.toLowerCase().includes(query) ||
-        rule.tags.some((tag) => tag.toLowerCase().includes(query));
-
-      return matchesCategory && matchesSearch;
-    });
-  }, [searchQuery, selectedCategory]);
+  const featuredRules = await getRules({
+    featured: true,
+    limit: 3,
+    sort: "popular",
+  });
 
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1">
         <div className="mx-auto max-w-6xl px-6">
-          <HeroSection
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-          />
+          <HeroSection />
         </div>
 
         <div className="mx-auto max-w-6xl px-6">
@@ -48,21 +38,21 @@ export default function Home() {
           <div className="h-px divider-line" />
         </div>
 
-        {/* Trending - luôn hiển thị, không phụ thuộc filter */}
         <div className="mx-auto max-w-6xl px-6">
-          <FeaturedRules rules={rules} />
+          <FeaturedRules rules={featuredRules} />
         </div>
 
         <div className="mx-auto max-w-6xl px-6">
           <div className="h-px divider-line" />
         </div>
 
-        <div className="mx-auto max-w-6xl px-6 pt-14">
-          <CategoryPills
-            selected={selectedCategory}
-            onSelect={setSelectedCategory}
+        <div className="mx-auto max-w-6xl px-6">
+          <RulesSection
+            categories={categories}
+            selectedSlug={category}
+            searchQuery={q}
+            rules={allRules}
           />
-          <PromptGrid rules={filteredRules} />
         </div>
 
         <div className="mx-auto max-w-6xl px-6">

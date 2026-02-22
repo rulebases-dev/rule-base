@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import NextTopLoader from "nextjs-toploader";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { CursorSpotlight } from "@/components/cursor-spotlight";
@@ -48,6 +49,12 @@ export default function RootLayout({
           enableColorScheme
           disableTransitionOnChange
         >
+          <NextTopLoader
+            color="#8b5cf6"
+            height={2}
+            showSpinner={false}
+            crawlSpeed={200}
+          />
           <ThemeColorMeta />
           <CursorSpotlight />
           <Header />

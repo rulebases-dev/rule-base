@@ -5,10 +5,11 @@ import { Check, Copy, Download } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { StarRating } from "@/components/star-rating";
-import { type Rule, formatCopyCount } from "@/lib/data";
+import { formatCopyCount } from "@/lib/data";
+import type { RuleForUI } from "@/lib/rules";
 
 interface PromptCardProps {
-  rule: Rule;
+  rule: RuleForUI;
   featured?: boolean;
 }
 
