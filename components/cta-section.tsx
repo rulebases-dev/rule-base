@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -29,9 +30,12 @@ export function CtaSection() {
               size="lg"
               className="gap-2 text-white shadow-xl shadow-violet-500/20 transition-all hover:opacity-90 hover:shadow-violet-500/30"
               style={{ background: 'linear-gradient(to right, rgb(124, 58, 237), rgb(79, 70, 229))' }}
+              asChild
             >
-              Submit a Rule
-              <ArrowRight className="size-4" style={{ color: '#fff', stroke: '#fff' }} />
+              <Link href="/rules/new">
+                Submit a Rule
+                <ArrowRight className="size-4" style={{ color: '#fff', stroke: '#fff' }} />
+              </Link>
             </Button>
             <Button
               variant="outline"

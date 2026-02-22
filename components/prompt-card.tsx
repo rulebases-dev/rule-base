@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Check, Copy, Download } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { StarRating } from "@/components/star-rating";
 import { formatCopyCount } from "@/lib/data";
+import { trackCopy } from "@/lib/actions/rules";
 import type { RuleForUI } from "@/lib/rules";
 
 interface PromptCardProps {
@@ -19,6 +21,7 @@ export function PromptCard({ rule, featured = false }: PromptCardProps) {
   async function handleCopy() {
     try {
       await navigator.clipboard.writeText(rule.content);
+      await trackCopy(rule.id, rule.slug);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
@@ -46,10 +49,13 @@ export function PromptCard({ rule, featured = false }: PromptCardProps) {
             {rule.avatar}
           </div>
           <div className="min-w-0">
-            <h3 className="truncate text-[15px] font-semibold leading-snug tracking-tight">
+            <Link
+              href={`/rules/${rule.slug}`}
+              className="block truncate text-[15px] font-semibold leading-snug tracking-tight hover:text-violet-500"
+            >
               {rule.title}
-            </h3>
-            <span className="text-xs text-muted-foreground/70">
+            </Link>
+            <span className="block text-xs text-muted-foreground/70">
               by {rule.author}
             </span>
           </div>

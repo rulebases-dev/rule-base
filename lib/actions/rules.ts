@@ -4,11 +4,11 @@ import { eq, sql, and } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 import { db } from "@/lib/db";
-import { ratings, rules } from "@/lib/db/schema";
+import { copies, ratings, rules } from "@/lib/db/schema";
 import { auth } from "@/lib/auth";
 import { rateRuleSchema } from "@/lib/validators/rules";
 
-export async function rateRule(ruleId: string, score: number) {
+export async function rateRule(ruleId: string, score: number, slug?: string) {
   const session = await auth();
   if (!session?.user?.id) {
     return { error: "You must be signed in to rate" };
@@ -48,12 +48,20 @@ export async function rateRule(ruleId: string, score: number) {
     .where(eq(rules.id, ruleId));
 
   revalidatePath("/");
+  if (slug) revalidatePath(`/rules/${slug}`);
   return { success: true };
 }
 
-export async function trackCopy(ruleId: string) {
+export async function trackCopy(ruleId: string, slug?: string) {
+  const session = await auth();
+  await db.insert(copies).values({
+    ruleId,
+    userId: session?.user?.id ?? null,
+  });
   await db
     .update(rules)
     .set({ copyCount: sql`${rules.copyCount} + 1` })
     .where(eq(rules.id, ruleId));
+  if (slug) revalidatePath(`/rules/${slug}`);
+  revalidatePath("/");
 }
