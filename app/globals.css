@@ -51,7 +51,9 @@
 }
 
 /* Safari iOS: color-scheme + ép màu base */
+/* Dùng clip thay vì hidden để không phá position: sticky của header */
 html {
+  overflow-x: clip;
   color-scheme: light;
   background-color: #ffffff;
   color: #252525;
@@ -63,6 +65,7 @@ html.dark {
 }
 /* Safari: đảm bảo body kế thừa đúng + giữ màu */
 body {
+  overflow-x: clip;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
   color-adjust: exact;
@@ -217,7 +220,7 @@ button,
 /* Glow orb effect */
 .hero-glow {
   position: absolute;
-  width: 600px;
+  width: min(600px, 100vw);
   height: 400px;
   top: -100px;
   left: 50%;

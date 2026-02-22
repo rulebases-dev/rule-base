@@ -3,7 +3,8 @@
 import { Suspense, useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { ArrowLeft, Github, Loader2, Terminal } from "lucide-react";
+import Image from "next/image";
+import { ArrowLeft, Github, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TurnstileWidget } from "@/components/turnstile-widget";
@@ -87,33 +88,34 @@ function SignUpContent() {
     : null;
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center px-6">
+    <div className="relative flex min-h-screen items-center justify-center overflow-y-auto px-4 py-6 sm:px-6 md:py-8">
       {/* Background effects */}
-      <div className="hero-grid pointer-events-none absolute inset-0 h-full" />
+      <div className="hero-grid pointer-events-none absolute inset-0 h-full min-h-screen" />
       <div className="hero-glow animate-glow-pulse" />
 
       {/* Back link */}
       <Link
         href="/"
-        className="absolute left-6 top-6 flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        className="absolute left-4 top-4 z-10 flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground sm:left-6 sm:top-6"
       >
-        <ArrowLeft className="size-4" />
+        <ArrowLeft className="size-4 shrink-0" />
         Back to home
       </Link>
 
       {/* Auth card */}
-      <div className="glass-card relative w-full max-w-sm rounded-2xl p-8">
+      <div className="glass-card relative w-full max-w-sm shrink-0 rounded-2xl p-4 sm:p-6 md:p-8">
         {/* Gradient top line */}
-        <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-violet-500/60 to-transparent" />
+        <div className="absolute -top-px left-4 right-4 h-px bg-gradient-to-r from-transparent via-violet-500/60 to-transparent sm:left-6 sm:right-6 md:left-8 md:right-8" />
 
         {/* Logo */}
-        <div className="mb-8 flex flex-col items-center gap-3">
-          <div
-            className="flex size-10 items-center justify-center rounded-xl shadow-lg shadow-violet-500/25"
-            style={{ background: "linear-gradient(to bottom right, rgb(139, 92, 246), rgb(79, 70, 229))" }}
-          >
-            <Terminal className="size-5 text-white" />
-          </div>
+        <div className="mb-6 flex flex-col items-center gap-3 sm:mb-8">
+          <Image
+            src="/icon.png"
+            alt="RuleBase"
+            width={40}
+            height={40}
+            className="size-10 rounded-xl shadow-lg shadow-violet-500/25"
+          />
           <div className="text-center">
             <h1 className="text-lg font-semibold tracking-tight">
               Create your RuleBase account
@@ -126,11 +128,11 @@ function SignUpContent() {
 
         {/* Success: Check your email */}
         {verifyEmailSent && (
-          <div className="mb-4 rounded-lg border border-emerald-500/20 bg-emerald-500/10 px-3 py-4 text-center">
+          <div className="mb-4 break-words rounded-lg border border-emerald-500/20 bg-emerald-500/10 px-3 py-4 text-center">
             <p className="text-[13px] font-medium text-emerald-600 dark:text-emerald-400">
               Check your email
             </p>
-            <p className="mt-1 text-xs text-muted-foreground">
+            <p className="mt-1 break-all text-xs text-muted-foreground">
               We sent a verification link to <strong>{email}</strong>. Click the link to activate your account.
             </p>
             <Button variant="outline" size="sm" className="mt-3 border-border" asChild>
@@ -181,9 +183,9 @@ function SignUpContent() {
         {!verifyEmailSent && (
         <>
         {/* Divider */}
-        <div className="my-6 flex items-center gap-3">
+        <div className="my-4 flex items-center gap-2 sm:my-6 sm:gap-3">
           <div className="h-px flex-1 bg-border" />
-          <span className="text-xs text-muted-foreground/60">
+          <span className="shrink-0 text-xs text-muted-foreground/60">
             or continue with email
           </span>
           <div className="h-px flex-1 bg-border" />

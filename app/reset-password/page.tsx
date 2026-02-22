@@ -1,12 +1,13 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { ArrowLeft, CheckCircle, Loader2, Terminal, XCircle } from "lucide-react";
+import Image from "next/image";
+import { ArrowLeft, CheckCircle, Loader2, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { resetPassword } from "@/lib/actions/auth";
+import { resetPassword, validateResetToken } from "@/lib/actions/auth";
 
 function ResetPasswordContent() {
   const searchParams = useSearchParams();
@@ -16,8 +17,20 @@ function ResetPasswordContent() {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [status, setStatus] = useState<"form" | "success" | "error">("form");
+  const [status, setStatus] = useState<"checking" | "form" | "success" | "error">("checking");
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    if (!token || !email) return;
+    validateResetToken(token, email).then((res) => {
+      if (!res?.valid) {
+        setStatus("error");
+        setMessage("This link has expired. Please request a new one.");
+      } else {
+        setStatus("form");
+      }
+    });
+  }, [token, email]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -44,17 +57,17 @@ function ResetPasswordContent() {
 
   if (!token || !email) {
     return (
-      <div className="relative flex min-h-screen items-center justify-center px-6">
-        <div className="hero-grid pointer-events-none absolute inset-0 h-full" />
+      <div className="relative flex min-h-screen items-center justify-center overflow-y-auto px-4 py-6 sm:px-6 md:py-8">
+        <div className="hero-grid pointer-events-none absolute inset-0 h-full min-h-screen" />
         <div className="hero-glow animate-glow-pulse" />
         <Link
           href="/forgot-password"
-          className="absolute left-6 top-6 flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          className="absolute left-4 top-4 z-10 flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground sm:left-6 sm:top-6"
         >
-          <ArrowLeft className="size-4" />
+          <ArrowLeft className="size-4 shrink-0" />
           Back
         </Link>
-        <div className="glass-card relative w-full max-w-sm rounded-2xl p-8 text-center">
+        <div className="glass-card relative w-full max-w-sm shrink-0 rounded-2xl p-4 text-center sm:p-6 md:p-8">
           <div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-red-500/20">
             <XCircle className="size-8 text-red-500" />
           </div>
@@ -71,28 +84,29 @@ function ResetPasswordContent() {
   }
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center px-6">
-      <div className="hero-grid pointer-events-none absolute inset-0 h-full" />
+    <div className="relative flex min-h-screen items-center justify-center overflow-y-auto px-4 py-6 sm:px-6 md:py-8">
+      <div className="hero-grid pointer-events-none absolute inset-0 h-full min-h-screen" />
       <div className="hero-glow animate-glow-pulse" />
 
       <Link
         href="/sign-in"
-        className="absolute left-6 top-6 flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        className="absolute left-4 top-4 z-10 flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground sm:left-6 sm:top-6"
       >
-        <ArrowLeft className="size-4" />
+        <ArrowLeft className="size-4 shrink-0" />
         Back to sign in
       </Link>
 
-      <div className="glass-card relative w-full max-w-sm rounded-2xl p-8">
-        <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-violet-500/60 to-transparent" />
+      <div className="glass-card relative w-full max-w-sm shrink-0 rounded-2xl p-4 sm:p-6 md:p-8">
+        <div className="absolute -top-px left-4 right-4 h-px bg-gradient-to-r from-transparent via-violet-500/60 to-transparent sm:left-6 sm:right-6 md:left-8 md:right-8" />
 
-        <div className="mb-8 flex flex-col items-center gap-3">
-          <div
-            className="flex size-10 items-center justify-center rounded-xl shadow-lg shadow-violet-500/25"
-            style={{ background: "linear-gradient(to bottom right, rgb(139, 92, 246), rgb(79, 70, 229))" }}
-          >
-            <Terminal className="size-5 text-white" />
-          </div>
+        <div className="mb-6 flex flex-col items-center gap-3 sm:mb-8">
+          <Image
+            src="/icon.png"
+            alt="RuleBase"
+            width={40}
+            height={40}
+            className="size-10 rounded-xl shadow-lg shadow-violet-500/25"
+          />
           <div className="text-center">
             <h1 className="text-lg font-semibold tracking-tight">
               Set new password
@@ -143,10 +157,20 @@ function ResetPasswordContent() {
           </>
         )}
 
+        {status === "checking" && (
+          <>
+            <div className="mx-auto mb-6 size-12 animate-spin rounded-full border-2 border-violet-500 border-t-transparent" />
+            <h2 className="text-center text-lg font-semibold">Checking link...</h2>
+            <p className="mt-2 text-center text-sm text-muted-foreground">
+              Please wait a moment.
+            </p>
+          </>
+        )}
+
         {status === "form" && (
           <>
             {message && (
-              <div className="mb-4 rounded-lg border border-red-500/20 bg-red-500/10 px-3 py-2 text-center text-[13px] text-red-600 dark:text-red-400">
+              <div className="mb-4 break-words rounded-lg border border-red-500/20 bg-red-500/10 px-3 py-2 text-center text-[13px] text-red-600 dark:text-red-400">
                 {message}
               </div>
             )}

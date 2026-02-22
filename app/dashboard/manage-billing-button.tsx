@@ -32,7 +32,7 @@ export function ManageBillingButton({
     <Button
       variant="outline"
       size="sm"
-      className="gap-1.5 border-border"
+      className="w-full gap-1.5 border-border sm:w-auto"
       onClick={handleClick}
       disabled={loading}
     >

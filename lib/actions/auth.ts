@@ -154,6 +154,21 @@ export async function requestPasswordReset(email: string) {
   return { success: true };
 }
 
+export async function validateResetToken(token: string, email: string) {
+  const identifier = getPasswordResetIdentifier(email);
+  const record = await db.query.verificationTokens.findFirst({
+    where: and(
+      eq(verificationTokens.identifier, identifier),
+      eq(verificationTokens.token, token)
+    ),
+    columns: { expires: true },
+  });
+  if (!record || new Date() > record.expires) {
+    return { valid: false };
+  }
+  return { valid: true };
+}
+
 export async function resetPassword(token: string, email: string, password: string) {
   const parsed = resetPasswordSchema.safeParse({ password });
   if (!parsed.success) {

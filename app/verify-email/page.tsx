@@ -33,20 +33,20 @@ function VerifyEmailContent() {
   }, [token, email]);
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center px-6">
-      <div className="hero-grid pointer-events-none absolute inset-0 h-full" />
+    <div className="relative flex min-h-screen items-center justify-center overflow-y-auto px-4 py-6 sm:px-6 md:py-8">
+      <div className="hero-grid pointer-events-none absolute inset-0 h-full min-h-screen" />
       <div className="hero-glow animate-glow-pulse" />
 
       <Link
         href="/sign-in"
-        className="absolute left-6 top-6 flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        className="absolute left-4 top-4 z-10 flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground sm:left-6 sm:top-6"
       >
-        <ArrowLeft className="size-4" />
+        <ArrowLeft className="size-4 shrink-0" />
         Back to sign in
       </Link>
 
-      <div className="glass-card relative w-full max-w-sm rounded-2xl p-8 text-center">
-        <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-violet-500/60 to-transparent" />
+      <div className="glass-card relative w-full max-w-sm shrink-0 rounded-2xl p-4 text-center sm:p-6 md:p-8">
+        <div className="absolute -top-px left-4 right-4 h-px bg-gradient-to-r from-transparent via-violet-500/60 to-transparent sm:left-6 sm:right-6 md:left-8 md:right-8" />
 
         {status === "loading" && (
           <>
@@ -86,7 +86,7 @@ function VerifyEmailContent() {
               <XCircle className="size-8 text-red-500" />
             </div>
             <h1 className="text-lg font-semibold">Verification failed</h1>
-            <p className="mt-2 text-sm text-muted-foreground">
+            <p className="mt-2 break-words text-sm text-muted-foreground">
               {message}
             </p>
             <p className="mt-4 text-[13px] text-muted-foreground">

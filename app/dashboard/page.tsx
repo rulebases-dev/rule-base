@@ -39,58 +39,58 @@ export default async function DashboardPage() {
     <div className="relative min-h-screen">
       <div className="hero-grid pointer-events-none absolute inset-0 h-64" />
 
-      <div className="relative mx-auto max-w-4xl px-6 py-12">
+      <div className="relative mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12">
         <Link
           href="/"
-          className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground sm:mb-8"
         >
           <ArrowLeft className="size-4" />
           Back to home
         </Link>
 
         {/* Profile header */}
-        <div className="glass-card mb-8 rounded-2xl p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+        <div className="glass-card mb-6 rounded-2xl p-4 sm:mb-8 sm:p-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex min-w-0 items-center gap-4">
               {session.user.image ? (
                 <img
                   src={session.user.image}
                   alt={session.user.name ?? ""}
-                  className="size-14 rounded-full ring-2 ring-border"
+                  className="size-12 shrink-0 rounded-full ring-2 ring-border sm:size-14"
                 />
               ) : (
                 <div
-                  className="flex size-14 items-center justify-center rounded-full text-lg font-bold text-white"
+                  className="flex size-12 shrink-0 items-center justify-center rounded-full text-lg font-bold text-white sm:size-14"
                   style={{ background: "linear-gradient(to bottom right, rgb(139, 92, 246), rgb(79, 70, 229))" }}
                 >
                   {session.user.name?.charAt(0) ?? "?"}
                 </div>
               )}
-              <div>
-                <div className="flex items-center gap-2">
-                  <h1 className="text-xl font-bold tracking-tight">
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h1 className="truncate text-lg font-bold tracking-tight sm:text-xl">
                     {session.user.name ?? session.user.email}
                   </h1>
                   {isPro ? (
-                    <Badge className="gap-1 border-violet-500/30 bg-violet-500/10 text-violet-600 dark:text-violet-300">
+                    <Badge className="shrink-0 gap-1 border-violet-500/30 bg-violet-500/10 text-violet-600 dark:text-violet-300">
                       <Crown className="size-3" />
                       Pro
                     </Badge>
                   ) : (
                     <Badge
                       variant="secondary"
-                      className="text-muted-foreground"
+                      className="shrink-0 text-muted-foreground"
                     >
                       Free
                     </Badge>
                   )}
                 </div>
-                <p className="text-sm text-muted-foreground">
+                <p className="truncate text-sm text-muted-foreground">
                   {session.user.email}
                 </p>
               </div>
             </div>
-            <div className="flex gap-2">
+            <div className="flex w-full shrink-0 gap-2 sm:w-auto">
               {isPro && subscription ? (
                 <ManageBillingButton
                   subscriptionId={subscription.lemonSqueezyId}
@@ -98,7 +98,7 @@ export default async function DashboardPage() {
               ) : (
                 <Button
                   size="sm"
-                  className="gap-1.5 text-white shadow-lg shadow-violet-500/20 hover:opacity-90"
+                  className="w-full gap-1.5 text-white shadow-lg shadow-violet-500/20 hover:opacity-90 sm:w-auto"
                   style={{ background: "linear-gradient(to right, rgb(124, 58, 237), rgb(79, 70, 229))" }}
                   asChild
                 >
