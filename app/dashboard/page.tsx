@@ -1,7 +1,27 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, BarChart3, Copy, FileText, Lock, Zap } from "lucide-react";
+import {
+  ArrowLeft,
+  BarChart3,
+  Bookmark,
+  Copy,
+  FileText,
+  History,
+  Pencil,
+  Plus,
+  Trash2,
+} from "lucide-react";
 import { auth } from "@/lib/auth";
+import {
+  getDashboardStats,
+  getUserRules,
+  getCopyHistory,
+  getBookmarkedRules,
+} from "@/lib/dashboard";
+import { formatCopyCount } from "@/lib/data";
+import { MyRulesList } from "./my-rules-list";
+import { CopyHistoryList } from "./copy-history-list";
+import { BookmarksList } from "./bookmarks-list";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -10,10 +30,17 @@ export default async function DashboardPage() {
     redirect("/sign-in");
   }
 
-  const stats = [
-    { label: "Rules Created", value: "0", icon: FileText },
-    { label: "Total Copies", value: "0", icon: Copy },
-    { label: "Avg. Rating", value: "—", icon: BarChart3 },
+  const [stats, userRules, copyHistory, bookmarks] = await Promise.all([
+    getDashboardStats(session.user.id),
+    getUserRules(session.user.id),
+    getCopyHistory(session.user.id),
+    getBookmarkedRules(session.user.id),
+  ]);
+
+  const statItems = [
+    { label: "Rules Created", value: String(stats.rulesCreated), icon: FileText },
+    { label: "Total Copies", value: formatCopyCount(stats.totalCopies), icon: Copy },
+    { label: "Avg. Rating", value: stats.avgRating > 0 ? stats.avgRating.toFixed(1) : "—", icon: BarChart3 },
   ];
 
   return (
@@ -42,7 +69,10 @@ export default async function DashboardPage() {
               ) : (
                 <div
                   className="flex size-12 shrink-0 items-center justify-center rounded-full text-lg font-bold text-white sm:size-14"
-                  style={{ background: "linear-gradient(to bottom right, rgb(139, 92, 246), rgb(79, 70, 229))" }}
+                  style={{
+                    background:
+                      "linear-gradient(to bottom right, rgb(139, 92, 246), rgb(79, 70, 229))",
+                  }}
                 >
                   {session.user.name?.charAt(0) ?? "?"}
                 </div>
@@ -56,12 +86,19 @@ export default async function DashboardPage() {
                 </p>
               </div>
             </div>
+            <Link
+              href="/rules/new"
+              className="inline-flex items-center gap-2 rounded-lg border border-border bg-subtle px-4 py-2 text-sm font-medium transition-colors hover:bg-subtle-stronger"
+            >
+              <Plus className="size-4" />
+              Submit Rule
+            </Link>
           </div>
         </div>
 
         {/* Stats */}
         <div className="mb-8 grid gap-4 sm:grid-cols-3">
-          {stats.map((stat) => (
+          {statItems.map((stat) => (
             <div
               key={stat.label}
               className="glass-card flex items-center gap-4 rounded-xl p-5"
@@ -70,53 +107,82 @@ export default async function DashboardPage() {
                 <stat.icon className="size-5 text-muted-foreground" />
               </div>
               <div>
-                <p className="text-2xl font-bold tracking-tight">
-                  {stat.value}
-                </p>
+                <p className="text-2xl font-bold tracking-tight">{stat.value}</p>
                 <p className="text-xs text-muted-foreground">{stat.label}</p>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Features (coming soon) */}
-        <h2 className="mb-4 text-lg font-semibold tracking-tight">
-          Coming soon
-        </h2>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {[
-            {
-              title: "Private Collections",
-              description: "Save and organize rules in private collections",
-              icon: Lock,
-            },
-            {
-              title: "Analytics Dashboard",
-              description: "Track views, copies, and ratings on your rules",
-              icon: BarChart3,
-            },
-            {
-              title: "AI Suggestions",
-              description: "Get AI-powered rule recommendations for your stack",
-              icon: Zap,
-            },
-          ].map((feature) => (
-            <div
-              key={feature.title}
-              className="glass-card relative flex items-start gap-4 rounded-xl p-5"
-            >
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-subtle-md">
-                <feature.icon className="size-5 text-muted-foreground/60" />
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold">{feature.title}</h3>
-                <p className="text-[13px] text-muted-foreground">
-                  {feature.description}
-                </p>
-              </div>
+        {/* My Rules */}
+        <section className="mb-10">
+          <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold tracking-tight">
+            <FileText className="size-5" />
+            My Rules
+          </h2>
+          {userRules.length > 0 ? (
+            <MyRulesList rules={userRules} />
+          ) : (
+            <div className="glass-card rounded-2xl p-8 text-center">
+              <p className="text-sm text-muted-foreground">
+                You haven&apos;t submitted any rules yet.
+              </p>
+              <Link
+                href="/rules/new"
+                className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-violet-500 hover:underline"
+              >
+                <Plus className="size-4" />
+                Submit your first rule
+              </Link>
             </div>
-          ))}
-        </div>
+          )}
+        </section>
+
+        {/* Copy History */}
+        <section className="mb-10">
+          <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold tracking-tight">
+            <History className="size-5" />
+            Copy History
+          </h2>
+          {copyHistory.length > 0 ? (
+            <CopyHistoryList items={copyHistory} />
+          ) : (
+            <div className="glass-card rounded-2xl p-6 text-center">
+              <p className="text-sm text-muted-foreground">
+                No copies yet. Browse rules and copy one to get started.
+              </p>
+              <Link
+                href="/#rules"
+                className="mt-2 inline-block text-sm font-medium text-violet-500 hover:underline"
+              >
+                Browse rules
+              </Link>
+            </div>
+          )}
+        </section>
+
+        {/* Bookmarks */}
+        <section>
+          <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold tracking-tight">
+            <Bookmark className="size-5" />
+            Bookmarks
+          </h2>
+          {bookmarks.length > 0 ? (
+            <BookmarksList rules={bookmarks} />
+          ) : (
+            <div className="glass-card rounded-2xl p-6 text-center">
+              <p className="text-sm text-muted-foreground">
+                No bookmarks yet. Click the bookmark icon on a rule to save it.
+              </p>
+              <Link
+                href="/#rules"
+                className="mt-2 inline-block text-sm font-medium text-violet-500 hover:underline"
+              >
+                Browse rules
+              </Link>
+            </div>
+          )}
+        </section>
       </div>
     </div>
   );

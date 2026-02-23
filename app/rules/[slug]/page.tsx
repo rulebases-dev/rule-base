@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { ArrowLeft } from "lucide-react";
 import { auth } from "@/lib/auth";
 import { getRuleBySlug, getRelatedRules } from "@/lib/rules";
+import { isBookmarked } from "@/lib/dashboard";
 import { RuleDetailContent } from "./rule-detail-content";
 
 interface Props {
@@ -33,7 +34,10 @@ export default async function RuleDetailPage({ params }: Props) {
   ]);
   if (!rule) notFound();
 
-  const relatedRules = await getRelatedRules(rule.categoryId, rule.id);
+  const [relatedRules, bookmarked] = await Promise.all([
+    getRelatedRules(rule.categoryId, rule.id),
+    session?.user?.id ? isBookmarked(session.user.id, rule.id) : Promise.resolve(false),
+  ]);
 
   return (
     <div className="relative min-h-screen">
@@ -50,6 +54,7 @@ export default async function RuleDetailPage({ params }: Props) {
           rule={rule}
           relatedRules={relatedRules}
           isSignedIn={!!session?.user}
+          isBookmarked={bookmarked}
         />
       </div>
     </div>

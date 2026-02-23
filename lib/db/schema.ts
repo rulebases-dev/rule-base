@@ -145,6 +145,24 @@ export const ratings = pgTable(
   (t) => [primaryKey({ columns: [t.userId, t.ruleId] })]
 );
 
+export const bookmarks = pgTable(
+  "bookmarks",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    ruleId: text("rule_id")
+      .notNull()
+      .references(() => rules.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.userId, t.ruleId] }),
+    index("bookmarks_user_idx").on(t.userId),
+    index("bookmarks_rule_idx").on(t.ruleId),
+  ]
+);
+
 export const copies = pgTable(
   "copies",
   {
@@ -204,6 +222,7 @@ export type NewUser = typeof users.$inferInsert;
 export type Rule = typeof rules.$inferSelect;
 export type NewRule = typeof rules.$inferInsert;
 export type Category = typeof categories.$inferSelect;
+export type Bookmark = typeof bookmarks.$inferSelect;
 export type Rating = typeof ratings.$inferSelect;
 export type Copy = typeof copies.$inferSelect;
 export type Subscription = typeof subscriptions.$inferSelect;

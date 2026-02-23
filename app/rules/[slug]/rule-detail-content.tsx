@@ -6,6 +6,7 @@ import { Check, Copy, Download, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { PromptCard } from "@/components/prompt-card";
+import { BookmarkButton } from "@/components/bookmark-button";
 import { formatCopyCount } from "@/lib/data";
 import { trackCopy, rateRule } from "@/lib/actions/rules";
 import type { RuleDetailForUI, RuleForUI } from "@/lib/rules";
@@ -14,12 +15,14 @@ interface RuleDetailContentProps {
   rule: RuleDetailForUI;
   relatedRules: RuleForUI[];
   isSignedIn?: boolean;
+  isBookmarked?: boolean;
 }
 
 export function RuleDetailContent({
   rule,
   relatedRules,
   isSignedIn = false,
+  isBookmarked = false,
 }: RuleDetailContentProps) {
   const [copied, setCopied] = useState(false);
   const [rating, setRating] = useState(rule.avgRating);
@@ -73,16 +76,24 @@ export function RuleDetailContent({
               </p>
             </div>
           </div>
-          <Button
-            size="sm"
-            variant={copied ? "default" : "outline"}
-            onClick={handleCopy}
-            className={
-              copied
-                ? "gap-1.5 bg-emerald-600 text-white hover:bg-emerald-600"
-                : "gap-1.5"
-            }
-          >
+          <div className="flex items-center gap-2">
+            {isSignedIn && (
+              <BookmarkButton
+                ruleId={rule.id}
+                slug={rule.slug}
+                initialBookmarked={isBookmarked}
+              />
+            )}
+            <Button
+              size="sm"
+              variant={copied ? "default" : "outline"}
+              onClick={handleCopy}
+              className={
+                copied
+                  ? "gap-1.5 bg-emerald-600 text-white hover:bg-emerald-600"
+                  : "gap-1.5"
+              }
+            >
             {copied ? (
               <>
                 <Check className="size-3.5" />
@@ -94,7 +105,8 @@ export function RuleDetailContent({
                 Copy
               </>
             )}
-          </Button>
+            </Button>
+          </div>
         </div>
 
         <p className="mb-4 text-[15px] leading-relaxed text-muted-foreground">
