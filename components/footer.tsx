@@ -4,9 +4,9 @@ import Image from "next/image";
 const footerLinks: Record<string, { label: string; href: string }[]> = {
   Product: [
     { label: "Browse Rules", href: "/#rules" },
-    { label: "Submit Rule", href: "/#submit" },
-    { label: "API", href: "#" },
-    { label: "Changelog", href: "#" },
+    { label: "Submit Rule", href: "/rules/new" },
+    { label: "API", href: "/api-docs" },
+    { label: "Changelog", href: "/changelog" },
   ],
   Community: [
     { label: "Discord", href: "#" },
@@ -20,9 +20,9 @@ const footerLinks: Record<string, { label: string; href: string }[]> = {
     { label: "Ko-fi", href: "https://ko-fi.com/rulebases" },
   ],
   Legal: [
-    { label: "Privacy Policy", href: "#" },
-    { label: "Terms of Service", href: "#" },
-    { label: "License", href: "#" },
+    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Terms of Service", href: "/terms" },
+    { label: "License", href: "/license" },
   ],
 };
 
