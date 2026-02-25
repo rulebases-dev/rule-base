@@ -9,19 +9,25 @@ export interface DashboardStats {
 }
 
 export async function getDashboardStats(userId: string): Promise<DashboardStats> {
-  const [stats] = await db
+  const [ruleStats] = await db
     .select({
       rulesCreated: sql<number>`count(${rules.id})::int`,
-      totalCopies: sql<number>`coalesce(sum(${rules.copyCount}), 0)::int`,
       avgRating: sql<number>`coalesce(avg(${rules.avgRating}), 0)::float`,
     })
     .from(rules)
     .where(eq(rules.authorId, userId));
 
+  const [copyStats] = await db
+    .select({
+      totalCopies: sql<number>`count(${copies.id})::int`,
+    })
+    .from(copies)
+    .where(eq(copies.userId, userId));
+
   return {
-    rulesCreated: stats?.rulesCreated ?? 0,
-    totalCopies: stats?.totalCopies ?? 0,
-    avgRating: stats?.avgRating ?? 0,
+    rulesCreated: ruleStats?.rulesCreated ?? 0,
+    totalCopies: copyStats?.totalCopies ?? 0,
+    avgRating: ruleStats?.avgRating ?? 0,
   };
 }
 
